@@ -12,8 +12,8 @@ type Props = {
   setEditableValue: Dispatch<SetStateAction<string>>;
   listThings: FriendsListType;
   dispatchListThings: Dispatch<ActionType>;
-  readingNotSavedData: boolean;
-  setReadingNotSavedData: Dispatch<SetStateAction<boolean>>;
+  readingNotSavedData:boolean
+  setReadingNotSavedData: Dispatch<SetStateAction<boolean>>
 };
 
 let latelyRecord = Date.now();
@@ -28,9 +28,10 @@ export const ButtonsForSpecialProperty = ({
   listThings,
   dispatchListThings,
   readingNotSavedData,
-  setReadingNotSavedData,
+  setReadingNotSavedData
 }: Props) => {
   const [repeatClear, setRepeatClear] = useState(false);
+  // const []
 
   function clearNoSave() {
     dispatchListThings({
@@ -51,23 +52,19 @@ export const ButtonsForSpecialProperty = ({
   function validationNecessarySaveAndSaveInNoSave() {
     if (!editableValue) return;
     if (editableValue === "") return;
-    if (listThings[idThing]?.[nameProperty + "NoSave"] === editableValue)
+    if (listThings[idThing]?.[nameProperty + "NoSave"] === editableValue) {
       return;
+    }
 
     console.log("Сохраняю");
     setEditableValueIn(true);
   }
 
   const handlerClickSeaNoSaved = () => {};
-  const handlerClickSeeNoSaved = () => {
-    setReadingNotSavedData(true);
-    setTextBeginEdited(true);
-  };
 
   useEffect(() => {
     if (textBeginEdited) setTextBeginEdited(false);
     if (repeatClear) setRepeatClear(false);
-    setReadingNotSavedData(false);
   }, [idThing]);
 
   useEffect(() => {
@@ -80,20 +77,12 @@ export const ButtonsForSpecialProperty = ({
   console.log(listThings.idThing);
   return (
     <>
-      {readingNotSavedData ? null :
-      !listThings[idThing][nameProperty + "NoSave"] ? null :
-      listThings[idThing][nameProperty + "NoSave"] === "" ? null : (
-        <button onClick={() => handlerClickSeeNoSaved()}>
+      {!listThings[idThing][nameProperty + "NoSave"] ? null : listThings[
+          idThing
+        ][nameProperty + "NoSave"] === "" ? null : (
+        <button onClick={() => handlerClickSeaNoSaved()}>
           Тут есть не сохраненные изменения
         </button>
-      )}
-
-      {!readingNotSavedData ? null : (
-        <>
-          <button></button>
-          <button></button>
-          <button></button>
-        </>
       )}
 
       {!textBeginEdited ? null : (
@@ -143,7 +132,7 @@ export const ButtonsForSpecialProperty = ({
           Ладно. Оставим пока.
         </button>
       )}
-        <button
+      <button
         className={repeatClear ? s.repeat : undefined}
         onClick={() => {
           if (!repeatClear) {
@@ -175,5 +164,4 @@ export const ButtonsForSpecialProperty = ({
       </button>
     </>
   );
-  
 };
