@@ -17,11 +17,13 @@ const urlParams = {
   phone: "{phone|format}",
   fromCity: "{city}",
 };
-const urlRequest =
-  "http://filltext.com/?" +
-  Object.entries(urlParams)
-    .map((param) => `${param[0]}=${param[1]}`)
-    .join("&");
+
+// const urlRequest = 'http://filltext.com/?' + Object.entries(urlParams).map( param => `${param[0]}=${param[1]}`).join('&') ;
+// Тут проще и правильней будет сделать так, чтобы не возиться c подстановкой значение в строку 
+const urlRequest = new URL('http://filltext.com');
+Object.entries(urlParams).forEach(([key, value]) => {
+  urlRequest.searchParams.append(key, String(value));
+});
 
 // Настройки параметров списка людей DisplayListThings
 const columnsForDisplay = ["fName", "sName", "age", "friends", "score"];
@@ -62,7 +64,7 @@ export const Home = (): JSX.Element => {
       <div>
         <ButtonRequest
           name="Найти новых друзей"
-          urlRequest={urlRequest}
+          urlRequest={urlRequest.toString()}
           handlerResponse={setListPeopleStorage}
           setIdSelectedThing={setIdSelectedPerson}
         />
