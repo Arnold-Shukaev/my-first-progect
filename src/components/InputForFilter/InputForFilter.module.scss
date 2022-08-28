@@ -1,0 +1,35 @@
+@import '../../themes/themes.module.scss';
+
+.sortBlockInput {
+    position: relative;
+
+    label {
+        position: absolute;
+        left: 0.5rem;
+        top: 0.2rem;
+        transition: all 0.3s linear;
+        font-size: 1.4rem;
+        border-radius: 1rem;
+        pointer-events: none;
+    }
+}
+
+.sortInput {
+    background-color: transparent;
+    border: none;
+    margin: auto;
+    font-size: 1.3rem;
+    padding: 1rem 0.5rem 0;
+    outline: none;
+}
+
+.sortInput:hover ~ label {
+    background-color: $color-lable-hover-valid;
+}
+.sortInput:focus ~ label,
+.sortInput:valid ~ label {
+    top: -0.9rem;
+    font-size: 1rem;
+    color: $color-lable-text-hover-valid;
+    background-color: transparent;
+}

@@ -1,0 +1,38 @@
+@import '../../themes/themes.module.scss';
+
+.blockTable {
+    max-height: 100%;
+    overflow-y: auto;
+    padding-bottom: 1rem;
+}
+.tableThings {
+    border-collapse: collapse;
+    width: 100%;
+
+    th, td {padding: 0.4rem;}
+    th {
+        background-color: $color-table-header;
+        outline: 1px solid $color-table-header-outline;
+        position: sticky;
+        top:0;
+    }
+    tbody {
+        text-align: center;
+        cursor: pointer;
+    }
+
+    tbody tr td:nth-child(1),
+    tbody tr td:nth-child(2) {text-align: left;}
+    tbody tr:hover {background-color: $color-table-row-hover}
+
+    tbody > :nth-child(2n) {
+        background-color: $color-table-2fon;
+    }
+
+    tbody .selectedThing {
+        background-color: $color-table-row-selected;
+    }
+}
+.defaultText {
+    text-align: center;
+}

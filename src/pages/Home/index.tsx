@@ -1,0 +1,68 @@
+import { Reducer, useReducer, useState, useEffect, useCallback } from "react";
+import { ButtonRequest } from "../../components/ButtonRequest"
+import { DisplayItemCard } from "../../components/DisplayItemCard";
+import { DisplayListThings} from "../../components/DisplayListThings";
+import style from './Home.module.scss'
+
+
+
+// Настройка запроса
+const urlParams = {
+    rows: 20,
+    fName: '{firstName}',
+    sName: '{lastName}',
+    age: '{numberRange|16, 85}',
+    friends: '{numberRange|0, 999}',
+    score: '{numberRange|0, 5}',
+    placeWork: '{business}',
+    email: '{email}',
+    phone: '{phone|format}',
+    fromCity: '{city}'
+}
+const urlRequest = 'http://filltext.com/?' + Object.entries(urlParams).map( param => `${param[0]}=${param[1]}`).join('&') ;
+
+// Настройки параметров списка людей DisplayListThings
+const columnsForDisplay = ['fName', 'sName', 'age', 'friends', 'score']
+const nameForColumns = ['Имя', 'Фамилия', 'Возраст', 'Друзья', 'Оценка']
+
+// Настройки параметров карточки человека DisplayItemCard
+const fildForDisplay = ['fName', 'sName', 'age', 'friends', 'score', 'fromCity', 'placeWork', 'email', 'phone']
+const nameForField = ['Имя', 'Фамилия', 'Возраст', 'Друзья', 'Оценка', 'Проживает в', 'Место работы', 'email', 'Телефон']
+
+
+
+export const Home = (): JSX.Element => {
+    const [listPeopleStorage, setListPeopleStorage] = useState<any[]>([]);
+    const [idSelectedPerson, setIdSelectedPerson] = useState<number|null>(null);
+    let selectedPerson = (idSelectedPerson === null) ? null : listPeopleStorage[idSelectedPerson];
+
+    return (
+        <div className={style.maket}>
+            <div>
+                <ButtonRequest
+                    name = 'Найти новых друзей'
+                    urlRequest = {urlRequest}
+                    handlerResponse = {setListPeopleStorage}
+                    setIdSelectedThing = {setIdSelectedPerson}
+                />
+                <DisplayListThings
+                    columnsForDisplay = {columnsForDisplay}
+                    columnsName = {nameForColumns}
+                    idSelectedThing = {idSelectedPerson}
+                    setIdSelectedThings = {setIdSelectedPerson}
+                    nameID={'_id'}
+                    listThings = {[...listPeopleStorage]}>
+                        
+                    Нажмите "Найти новых друзей" для отображения данных
+                </DisplayListThings>
+            </div>
+            <div>
+                <DisplayItemCard
+                    fieldForDisplay = {fildForDisplay}
+                    nameForField = {nameForField}
+                    selectedThing = {selectedPerson}
+                />
+            </div>
+        </div>
+    )
+}

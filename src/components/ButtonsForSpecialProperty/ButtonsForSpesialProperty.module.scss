@@ -1,0 +1,20 @@
+@import '../../themes/themes.module.scss';
+
+.repeat {
+    background-color: $color-button-warning-yes;
+    color: $color-text-warning;
+    border-color: $color-text-warning;
+    &:hover{background-color: $color-button-warning-yes-hover;}
+}
+.noClear {
+    background-color: $color-button-warning-no;
+    &:hover{background-color: $color-button-warning-no-hover;}
+}
+
+.repeat,
+.repeat:hover,
+.noClear{
+    font-weight: bolder;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}

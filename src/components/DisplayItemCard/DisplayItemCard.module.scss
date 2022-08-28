@@ -1,0 +1,34 @@
+
+.imageThing {
+    position: relative;
+    padding: 15%;
+    background-color: green;
+    margin: 3rem auto;
+    border-radius: 50%;
+
+
+    > div {
+        font-family: 'Courier New', Courier, monospace;
+        position: absolute;
+        font-size: 3rem;
+        top: calc(50% - 1.6rem);
+        left: calc(50% - 1.8rem);
+    }
+
+    @media (max-width: 650px) {
+        padding: 8%;
+
+    }
+}
+
+.paramThing {
+    text-align: left;
+    padding: 0 2rem;
+    span {
+        font-weight: bolder;
+    }
+}
+
+.message {
+    align-self: center;
+}

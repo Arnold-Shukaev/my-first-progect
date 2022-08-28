@@ -1,0 +1,37 @@
+@import '../../themes/themes.module.scss';
+
+.textProperty {
+    height: calc(100% - 1.6rem);
+    line-height: 1.25;
+    text-align: justify;
+}
+.textBlock {
+    overflow: hidden;
+}
+.plaseForText{
+    width: 100%;
+    overflow: hidden;
+    border: none;
+    background-color: transparent;
+    resize: none;
+    &:focus {
+        outline: none;
+    }
+}
+.moreText {
+    font-weight: bolder;
+    color: $color-illumination;
+}
+
+.activeDiv {
+    display: grid;
+    grid-template-rows: 1fr auto;
+
+    .textBlock{
+        margin-bottom: 1rem;
+    }
+    textarea.activeTextarea {
+        height: 100px;
+        overflow-y: auto;
+    }
+}
