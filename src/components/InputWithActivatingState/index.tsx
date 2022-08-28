@@ -55,6 +55,7 @@ export const InputWithActivatingState = ({
   const refAllBlock = useRef<HTMLDivElement>(null);
   const [textBeginEdited, setTextBeginEdited] = useState<boolean>(false);
   const [editableValue, setEditableValue] = useState<string>("");
+  const [readingNotSavedData, setReadingNotSavedData] = useState(false);
 
   //TODO: на сколько корректно так делать?
   //Я создал отдельный state и слушатель, чтобы делать перерендер компонента при изменении размера экрана
@@ -146,7 +147,9 @@ export const InputWithActivatingState = ({
             className={s.plaseForText}
             onChange={(e) => setEditableValue(e.target.value)}
             value={
-              textBeginEdited
+                readingNotSavedData
+                ? listThings[idThing][propertyName + "NoSave"]
+                : textBeginEdited
                 ? editableValue
                 : listThings[idThing][propertyName] || ""
             }
@@ -164,6 +167,8 @@ export const InputWithActivatingState = ({
             setEditableValue={setEditableValue}
             listThings={listThings}
             dispatchListThings={dispatchListThings}
+            readingNotSavedData={readingNotSavedData}
+            setReadingNotSavedData={setReadingNotSavedData}
           />
         )}
       </div>
