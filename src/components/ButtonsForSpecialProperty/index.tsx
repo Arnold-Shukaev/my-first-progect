@@ -48,8 +48,8 @@ export const ButtonsForSpecialProperty = ({
   function validationNecessarySaveAndSaveInNoSave() {
     if (!editableValue) return;
     if (editableValue === "") return;
-    if (listThings[idThing]?.[nameProperty + "NoSave"] === editableValue) {
-    return;}
+    if (listThings[idThing]?.[nameProperty + "NoSave"] === editableValue)
+      return;
 
     console.log("Сохраняю");
     setEditableValueIn(true);
