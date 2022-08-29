@@ -1,165 +1,217 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ActionType, FriendsListType } from "../../pages/Friends";
+import { ActionButtonType, StateButtonType } from "../InputWithActivatingState";
 import s from "./ButtonsForSpesialProperty.module.scss";
 
 type Props = {
   idThing: string;
+  listThings: FriendsListType;
   nameProperty: string;
   editableValue: string;
   setActiveProperty: Dispatch<SetStateAction<HTMLDivElement | null>>;
-  setTextBeginEdited: Dispatch<SetStateAction<boolean>>;
-  textBeginEdited: boolean;
+  dispatchStateButton: Dispatch<ActionButtonType[]>;
+  stateButton: StateButtonType;
   setEditableValue: Dispatch<SetStateAction<string>>;
-  listThings: FriendsListType;
   dispatchListThings: Dispatch<ActionType>;
   readingNotSavedData:boolean
   setReadingNotSavedData: Dispatch<SetStateAction<boolean>>
 };
 
 let latelyRecord = Date.now();
+
 export const ButtonsForSpecialProperty = ({
   idThing,
+  listThings,
   nameProperty,
   editableValue,
   setActiveProperty,
-  setTextBeginEdited,
-  textBeginEdited,
+  dispatchStateButton,
+  stateButton,
   setEditableValue,
-  listThings,
   dispatchListThings,
-  readingNotSavedData,
-  setReadingNotSavedData
 }: Props) => {
   const [repeatClear, setRepeatClear] = useState(false);
   // const []
 
-  function clearNoSave() {
+  const [clearMode, setClearMode] = useState(false);
+  const {beginEdited, readingNotSavedData, thisNotSaved} = stateButton;
+  const haveNotNotSaveData = listThings[idThing][nameProperty + "NotSaved"] ? false : true;
+console.log(haveNotNotSaveData)
+
+  const setPropertyValue = (inNotSaved: boolean, savedValue: string = editableValue) => {
     dispatchListThings({
       type: "update",
       idThing: idThing,
-      nameProperty: nameProperty + "NoSave",
-      newValue: "",
+      nameProperty: nameProperty + (inNotSaved ? "NotSaved" : ""),
+      newValue: savedValue,
     });
-  }
-  function setEditableValueIn(inNoSave: boolean) {
-    dispatchListThings({
-      type: "update",
-      idThing: idThing,
-      nameProperty: nameProperty + (inNoSave ? "NoSave" : ""),
-      newValue: editableValue,
-    });
-  }
-  function validationNecessarySaveAndSaveInNoSave() {
+  };
+  const validationNecessarySaveAndSaveInNotSaved = () => {
     if (!editableValue) return;
     if (editableValue === "") return;
     if (listThings[idThing]?.[nameProperty + "NoSave"] === editableValue) {
       return;
     }
 
-    console.log("Сохраняю");
-    setEditableValueIn(true);
-  }
+    setPropertyValue(true);
+  };
+  const handlerClickSeeNotSaved = () => {
+    dispatchStateButton([{
+      key: "readingNotSavedData",
+      value: true
+    }])
+  };
+  const handlerClickSaveNotSavedData = () => {
+    if (thisNotSaved) setPropertyValue(false, listThings[idThing][nameProperty + "NotSaved"]);
+    setEditableValue("")
+    setPropertyValue(true, "");
+    dispatchStateButton([
+      {key: "readingNotSavedData", value: false},
+      {key: "thisNotSaved", value: true}
+    ])
+  };
+  const handlerClickExit = () => {
+    setActiveProperty(null);
+    dispatchStateButton([
+      {key: "beginEdited", value: false},
+      {key: "readingNotSavedData", value: false},
+      {key: "thisNotSaved", value: true}
+    ]);
 
-  const handlerClickSeaNoSaved = () => {};
+    validationNecessarySaveAndSaveInNotSaved();
+  };
+  const handlerClickClearPropertyData = () => {
+    dispatchStateButton([{key: "beginEdited", value: false}]);
+    setClearMode(false);
+    setPropertyValue(false, "");
+  };
+  const handlerClickStartChange = () => {
+    const textProperty = listThings[idThing][nameProperty] || "";
+    setEditableValue(textProperty);
+    dispatchStateButton([{key: "beginEdited", value: true}]);
+    document.getElementById(idThing + nameProperty)?.focus();
+  }
+  const handlerClickNotSaveChanges = () => {
+    dispatchStateButton([{key: "beginEdited", value: false}]);
+    setEditableValue("");
+    setPropertyValue(true, "");
+  };
+  const handlerClickSaveChanges = () => {
+    dispatchStateButton([{key: "beginEdited", value: false}]);
+    setPropertyValue(false);
+    setEditableValue("");
+    setPropertyValue(true, "");
+  };
 
   useEffect(() => {
-    if (textBeginEdited) setTextBeginEdited(false);
-    if (repeatClear) setRepeatClear(false);
+    dispatchStateButton([
+      {key: "beginEdited", value: false},
+      {key: "readingNotSavedData", value: false},
+      {key: "thisNotSaved", value: true}
+    ]);
+    if (clearMode) setClearMode(false);
   }, [idThing]);
 
   useEffect(() => {
-    if (Date.now() - latelyRecord < 3000) return;
+    if ( (Date.now() - latelyRecord) < 3000 ) return;
     latelyRecord = Date.now();
-    if (!textBeginEdited) return;
-    validationNecessarySaveAndSaveInNoSave();
+    if (!beginEdited) return;
+    validationNecessarySaveAndSaveInNotSaved();
   }, [editableValue]);
 
-  console.log(listThings.idThing);
+
   return (
     <>
-      {!listThings[idThing][nameProperty + "NoSave"] ? null : listThings[
-          idThing
-        ][nameProperty + "NoSave"] === "" ? null : (
-        <button onClick={() => handlerClickSeaNoSaved()}>
-          Тут есть не сохраненные изменения
-        </button>
-      )}
+      {beginEdited || clearMode || haveNotNotSaveData ? null :
+      readingNotSavedData
+        ?<>
+          <div className={s.twoButton}>
+            <button
+              className={thisNotSaved ? undefined : s.save}
+              onClick={ () => dispatchStateButton([{key: "thisNotSaved", value: false}]) }>
 
-      {!textBeginEdited ? null : (
-        <div>
+              Текущие
+            </button>
+
+            <button
+              className={thisNotSaved ? s.save : undefined}
+              onClick={ () => dispatchStateButton([{key: "thisNotSaved", value: true}]) }>
+              
+              Не сохраненные
+            </button>
+          </div>
           <button
-            onClick={() => {
-              setTextBeginEdited(false);
-              setEditableValueIn(false);
-              if (!editableValue) return;
-              if (editableValue === "") return;
-              clearNoSave();
-            }}
-          >
+            className={s.notSave}
+            onClick={ () => handlerClickSaveNotSavedData() }>
+
+            Теперь будут эти данные
+          </button>
+        </>
+
+        : <button
+          className={s.notSave} 
+          onClick={() => handlerClickSeeNotSaved() }>
+          
+          Тут есть не сохраненные данные
+        </button>
+      }
+
+
+
+      {readingNotSavedData || clearMode ? null :
+      beginEdited
+        ? <>
+          <button
+            className={s.save}
+            onClick={() => handlerClickSaveChanges() }>
+
             Сохранить изменения
           </button>
 
           <button
-            onClick={() => {
-              setTextBeginEdited(false);
-              if (!editableValue) return;
-              if (editableValue === "") return;
-              clearNoSave();
-            }}
-          >
+            className={s.notSave}
+            onClick={() => handlerClickNotSaveChanges() }>
+
             Не! Не сохранять!
           </button>
-        </div>
-      )}
+        </>
 
-      <button
-        onClick={() => {
-          setEditableValue(listThings[idThing][nameProperty]);
-          setTextBeginEdited(true);
-          document.getElementById(idThing + nameProperty)?.focus();
-        }}
-      >
-        Изменить
-      </button>
-
-      {!repeatClear ? null : (
+        : !haveNotNotSaveData ? null :
         <button
-          className={s.noClear}
-          onClick={() => {
-            setRepeatClear(false);
-          }}
-        >
-          Ладно. Оставим пока.
+          onClick={() => handlerClickStartChange() }>
+
+          Изменить
         </button>
-      )}
-      <button
-        className={repeatClear ? s.repeat : undefined}
-        onClick={() => {
-          if (!repeatClear) {
-            setRepeatClear(true);
-          } else {
-            setTextBeginEdited(false);
-            setRepeatClear(false);
-            dispatchListThings({
-              type: "update",
-              idThing: idThing,
-              nameProperty: nameProperty,
-              newValue: "",
-            });
-          }
-        }}
-      >
-        {repeatClear ? "Все изчезнет без следа!!!" : "Очистить"}
-      </button>
+      }
 
-      <button
-        onClick={() => {
-          setActiveProperty(null);
-          setTextBeginEdited(false);
 
-          validationNecessarySaveAndSaveInNoSave();
-        }}
-      >
+
+      {readingNotSavedData || beginEdited || !haveNotNotSaveData ? null
+      : clearMode
+        ? (<>
+          <button
+            className={s.noClear}
+            onClick={ () => setClearMode(false) }>
+            
+            Ладно. Оставим пока.
+          </button>
+
+          <button
+            className={s.repeat}
+            onClick={() => handlerClickClearPropertyData() }>
+
+            Все изчезнет без следа!!!
+          </button>
+        </>)
+
+        : <button onClick={() => setClearMode(true) }>
+          Очистить 
+        </button>
+      }
+
+
+
+      <button onClick={() => handlerClickExit() }>
         Выйти из текущего блока
       </button>
     </>
