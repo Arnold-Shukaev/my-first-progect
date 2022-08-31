@@ -92,7 +92,7 @@ export const InputWithActivatingState = ({
     initialStateButton
   );
   const { beginEdited, readingNotSavedData, thisNotSaved } = stateButton;
-
+  console.log('Тренировочное куку')
   //TODO: на сколько корректно так делать?
   //Я создал отдельный state и слушатель, чтобы делать ререндер компонента при изменении размера экрана
   const [state, setState] = useState({
