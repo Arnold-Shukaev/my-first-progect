@@ -204,6 +204,8 @@ export const InputWithActivatingState = ({
             stateButton={stateButton}
             setEditableValue={setEditableValue}
             dispatchListThings={dispatchListThings}
+            readingNotSavedData={readingNotSavedData}
+            setReadingNotSavedData={setReadingNotSavedData}
           />
         )}
       </div>

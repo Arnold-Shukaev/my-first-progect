@@ -13,6 +13,8 @@ type Props = {
   stateButton: StateButtonType;
   setEditableValue: Dispatch<SetStateAction<string>>;
   dispatchListThings: Dispatch<ActionType>;
+  readingNotSavedData:boolean
+  setReadingNotSavedData: Dispatch<SetStateAction<boolean>>
 };
 
 let latelyRecord = Date.now();
@@ -29,11 +31,9 @@ export const ButtonsForSpecialProperty = ({
   dispatchListThings,
   }: Props) => {
 
-
   const [clearMode, setClearMode] = useState(false);
   const {beginEdited, readingNotSavedData, thisNotSaved} = stateButton;
   const haveNotNotSaveData = listThings[idThing][nameProperty + "NotSaved"] ? false : true;
-console.log(haveNotNotSaveData)
 
   const setPropertyValue = (inNotSaved: boolean, savedValue: string = editableValue) => {
     dispatchListThings({
@@ -50,7 +50,6 @@ console.log(haveNotNotSaveData)
       return;
     if (listThings[idThing][nameProperty] === editableValue)
       return;
-
     setPropertyValue(true);
   };
   const handlerClickSeeNotSaved = () => {
@@ -198,7 +197,7 @@ console.log(haveNotNotSaveData)
             className={s.repeat}
             onClick={() => handlerClickClearPropertyData() }>
 
-            Все изчезнет без следа!!!
+            Все исчезнет без следа!!!
           </button>
         </>)
 
