@@ -1,6 +1,15 @@
-import { Dispatch, Reducer, SetStateAction, useEffect, useReducer, useRef, useState } from "react";
+import {
+  Dispatch,
+  Reducer,
+  SetStateAction,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import { ActionType, FriendsListType } from "../../pages/Friends";
 import { ButtonsForSpecialProperty } from "../ButtonsForSpecialProperty";
+import { NotificationOfChange } from "../NotificationOfChange";
 import s from "./InputWithActivatingState.module.scss";
 
 type Props = {
@@ -45,23 +54,26 @@ export type StateButtonType = {
   beginEdited: boolean;
   readingNotSavedData: boolean;
   thisNotSaved: boolean;
-}
+};
 const initialStateButton: StateButtonType = {
   beginEdited: false,
   readingNotSavedData: false,
   thisNotSaved: true,
-}
+};
 export type ActionButtonType = {
   key: "beginEdited" | "readingNotSavedData" | "thisNotSaved";
   value: boolean;
-}
-const reducerStateButton: Reducer<StateButtonType, ActionButtonType[]> = (state, action): StateButtonType => {
-  action.forEach( (rool) => {
-    const {key, value} = rool;
+};
+const reducerStateButton: Reducer<StateButtonType, ActionButtonType[]> = (
+  state,
+  action
+): StateButtonType => {
+  action.forEach((rule) => {
+    const { key, value } = rule;
     state[key] = value;
-  })
-  return {...state};
-}
+  });
+  return { ...state };
+};
 
 export const InputWithActivatingState = ({
   label,
@@ -72,15 +84,17 @@ export const InputWithActivatingState = ({
   listThings,
   dispatchListThings,
 }: Props) => {
-  
   const revText = useRef<HTMLDivElement>(null);
   const refAllBlock = useRef<HTMLDivElement>(null);
   const [editableValue, setEditableValue] = useState<string>("");
-  const [stateButton, dispatchStateButton] = useReducer(reducerStateButton, initialStateButton)
-  const {beginEdited, readingNotSavedData, thisNotSaved} = stateButton;
-  
+  const [stateButton, dispatchStateButton] = useReducer(
+    reducerStateButton,
+    initialStateButton
+  );
+  const { beginEdited, readingNotSavedData, thisNotSaved } = stateButton;
+
   //TODO: на сколько корректно так делать?
-  //Я создал отдельный state и слушатель, чтобы делать перерендер компонента при изменении размера экрана
+  //Я создал отдельный state и слушатель, чтобы делать ререндер компонента при изменении размера экрана
   const [state, setState] = useState({
     h: document.documentElement.clientHeight,
     w: document.documentElement.clientWidth,
@@ -100,11 +114,13 @@ export const InputWithActivatingState = ({
 
   const textMode = () => {
     if (beginEdited) return editableValue;
-    if (readingNotSavedData && !thisNotSaved) return (listThings[idThing][propertyName] || "");
-    if (readingNotSavedData && thisNotSaved) return listThings[idThing][propertyName + "NotSaved"];
-    return (listThings[idThing][propertyName] || "");
-  }
-  
+    if (readingNotSavedData && !thisNotSaved)
+      return listThings[idThing][propertyName] || "";
+    if (readingNotSavedData && thisNotSaved)
+      return listThings[idThing][propertyName + "NotSaved"];
+    return listThings[idThing][propertyName] || "";
+  };
+
   // Сокращение длинны текста в блоке при превышении
   useEffect(() => {
     if (revText.current === null) return;
@@ -124,7 +140,7 @@ export const InputWithActivatingState = ({
       revText.current!.nextElementSibling!.textContent = "";
     };
   });
-  
+
   let selectThisProperty = false;
   if (refAllBlock.current) {
     selectThisProperty = activeProperty === refAllBlock.current.parentNode;
@@ -143,11 +159,16 @@ export const InputWithActivatingState = ({
     };
   });
 
-  //TODO: ID наверное не рекомендууется использовать вообще?
+  //TODO: ID наверное не рекомендуется использовать вообще?
   return (
     <>
       <label htmlFor={propertyName + "InputWithActivatingState"}>
-        <h4>{label}</h4>
+        <h4 className={s.labelProperty}>
+          <NotificationOfChange
+            propertyValue={Boolean (listThings[idThing][propertyName + 'NotSaved'])}
+          />
+          {label}
+        </h4>
       </label>
       <div
         className={s.textProperty}
@@ -155,21 +176,23 @@ export const InputWithActivatingState = ({
         id={propertyName + "InputWithActivatingState"}
         onClick={() => {
           if (!selectThisProperty)
-            setActiveProperty(refAllBlock.current!.parentNode as HTMLDivElement);
+            setActiveProperty(
+              refAllBlock.current!.parentNode as HTMLDivElement
+            );
         }}
       >
         <div ref={revText} className={s.textBlock}>
           <textarea
             id={idThing + propertyName}
             readOnly={!beginEdited}
-            className={s.plaseForText}
+            className={s.placeForText}
             onChange={(e) => setEditableValue(e.target.value)}
             value={textMode()}
           />
         </div>
 
         <div className={s.moreText}></div>
-        
+
         {selectThisProperty && (
           <ButtonsForSpecialProperty
             idThing={idThing}
