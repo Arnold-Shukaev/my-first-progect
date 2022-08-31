@@ -1,20 +1,27 @@
 @import '../../themes/themes.module.scss';
 
-.repeat {
+.repeat, .notSave {
     background-color: $color-button-warning-yes;
     color: $color-text-warning;
     border-color: $color-text-warning;
     &:hover{background-color: $color-button-warning-yes-hover;}
 }
-.noClear {
+.noClear, .save {
     background-color: $color-button-warning-no;
     &:hover{background-color: $color-button-warning-no-hover;}
 }
 
 .repeat,
 .repeat:hover,
-.noClear{
+.noClear,
+.save,
+.notSave{
     font-weight: bolder;
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.twoButton {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
