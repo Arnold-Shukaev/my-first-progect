@@ -15,8 +15,6 @@ type Props = {
   dispatchListThings: Dispatch<ActionType>;
 };
 
-let latelyRecord = Date.now();
-
 export const ButtonsForSpecialProperty = ({
   idThing,
   listThings,
@@ -72,8 +70,6 @@ export const ButtonsForSpecialProperty = ({
       {key: "readingNotSavedData", value: false},
       {key: "thisNotSaved", value: true}
     ]);
-
-    validationNecessarySaveAndSaveInNotSaved();
   };
   const handlerClickClearPropertyData = () => {
     dispatchStateButton([{key: "beginEdited", value: false}]);
@@ -108,8 +104,6 @@ export const ButtonsForSpecialProperty = ({
   }, [idThing]);
 
   useEffect(() => {
-    if ( (Date.now() - latelyRecord) < 3000 ) return;
-    latelyRecord = Date.now();
     if (!beginEdited) return;
     validationNecessarySaveAndSaveInNotSaved();
   }, [editableValue]);
