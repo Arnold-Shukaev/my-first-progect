@@ -1,6 +1,7 @@
-import { Dispatch, Reducer, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { ActionType, FriendsListType } from "../../pages/Friends";
 import { InputWithActivatingState } from "../InputWithActivatingState";
+import { Stars } from "../Stars";
 import s from "./SpecialPropertysFriend.module.scss";
 
 type Props = {
@@ -11,7 +12,7 @@ type Props = {
   dispatchListThings: Dispatch<ActionType>;
 };
 
-//Настройка блоков (index listLable должен соответствовать index listPropertyName)
+//Настройка блоков (index listLabel должен соответствовать index listPropertyName)
 const listLabel: string[] = [
   "Что любит",
   "Что не любит",
@@ -39,7 +40,8 @@ export const SpecialPropertyFriend = ({
     <div className={s.additionally}>
       {activeProperty ? null : (
         <div className={s.specialProperty}>
-          <h4>Моя оценка</h4>
+          <h4 className={s.myScore}>Моя оценка</h4>
+          <Stars/>
         </div>
       )}
 

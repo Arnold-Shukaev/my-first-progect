@@ -24,12 +24,12 @@
 }
 
 .sortInput:hover ~ label {
-    background-color: $color-lable-hover-valid;
+    background-color: $color-label-hover-valid;
 }
 .sortInput:focus ~ label,
 .sortInput:valid ~ label {
     top: -0.9rem;
     font-size: 1rem;
-    color: $color-lable-text-hover-valid;
+    color: $color-label-text-hover-valid;
     background-color: transparent;
 }
