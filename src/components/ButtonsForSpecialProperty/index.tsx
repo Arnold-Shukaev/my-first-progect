@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ActionType, FriendsListType } from "../../pages/Friends";
 import { ActionButtonType, StateButtonType } from "../InputWithActivatingState";
-import s from "./ButtonsForSpesialProperty.module.scss";
-
+import s from "./ButtonsForSpecialProperty.module.scss";
+ 
 type Props = {
   idThing: string;
   listThings: FriendsListType;
@@ -13,8 +13,6 @@ type Props = {
   stateButton: StateButtonType;
   setEditableValue: Dispatch<SetStateAction<string>>;
   dispatchListThings: Dispatch<ActionType>;
-  readingNotSavedData:boolean
-  setReadingNotSavedData: Dispatch<SetStateAction<boolean>>
 };
 
 let latelyRecord = Date.now();
