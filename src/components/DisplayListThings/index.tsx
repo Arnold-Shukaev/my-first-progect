@@ -47,7 +47,7 @@ export const DisplayListThings = ({
     return (
       <>
         <div className={s.blockTable}>
-          <table className={s.tableThings}>
+          <table className={s.tableThings} onFocus={() => console.log(20)}>
             <thead>
               <tr>
                 {columnsName.map((name, id) => (
@@ -66,19 +66,19 @@ export const DisplayListThings = ({
             <tbody>
               {resultListThings.map((thing: any, id: any) => {
                 return (
-                  <tr
-                    key={id}
-                    className={
-                      thing[nameID] === idSelectedThing
-                        ? s.selectedThing
-                        : undefined
-                    }
-                    onClick={() => setIdSelectedThings(thing[nameID])}
-                  >
-                    {columnsForDisplay.map((column, id2) => (
-                      <td key={id2}>{thing[column]}</td>
-                    ))}
-                  </tr>
+                    <tr
+                      key={id}
+                      className={
+                        thing[nameID] === idSelectedThing
+                          ? s.selectedThing
+                          : undefined
+                      }
+                      onClick={() => setIdSelectedThings(thing[nameID])}
+                    >
+                      {columnsForDisplay.map((column, id2) => (
+                        <td key={id2}>{thing[column]}</td>
+                      ))}
+                    </tr>
                 );
               })}
               {noFilteringResult}

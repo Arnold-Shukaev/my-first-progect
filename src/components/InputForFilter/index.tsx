@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useRef } from "react";
 import { StateFilterType } from "../SortAndFilterBlock";
-import s from "./InputForFilter.module.scss";
+import s from './InputForFilter.module.scss';
 
 type Props = {
   nameButton: string;
@@ -16,7 +16,7 @@ export const InputForFilter = ({
   const lengthInput = nameButton.length - 1;
   const refInput = useRef<HTMLInputElement>(null);
 
-  function hendlerChange() {
+  function handlerChange() {
     setStateFilter((prevMap) => {
       let newState = Object.assign({}, prevMap);
       newState[nameParam] = refInput.current!.value;
@@ -33,7 +33,7 @@ export const InputForFilter = ({
         type="text"
         id={nameParam + "Input"}
         required
-        onChange={hendlerChange}
+        onChange={handlerChange}
       ></input>
       <label htmlFor={nameParam + "Input"}>{nameButton}</label>
     </div>

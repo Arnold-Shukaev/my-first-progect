@@ -1,0 +1,25 @@
+@import "../../themes/themes.module.scss";
+
+.notificationOfChange {
+  position: absolute;
+  left: 0rem;
+  top: 0.5rem;
+  padding: 0.6rem;
+  border-radius: 50%;
+  background-color: $color-theme-router;
+
+  animation-name: flicker;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+@keyframes flicker {
+  from {
+    background-color: $color-theme-router;
+  }
+  50% {
+    background-color: $color-table-2fon;
+  }
+  to {
+    background-color: $color-theme-router;
+  }
+}
