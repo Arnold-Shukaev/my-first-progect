@@ -186,7 +186,7 @@ export const InputWithActivatingState = ({
             id={idThing + propertyName}
             readOnly={!beginEdited}
             className={s.placeForText}
-            onChange={(e) => {setEditableValue(e.target.value); console.log(20)}}
+            onChange={(e) => setEditableValue(e.target.value)}
             value={textMode()}
           />
         </div>

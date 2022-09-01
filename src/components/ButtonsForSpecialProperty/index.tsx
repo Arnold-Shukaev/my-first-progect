@@ -2,7 +2,6 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ActionType, FriendsListType } from "../../pages/Friends";
 import { ActionButtonType, StateButtonType } from "../InputWithActivatingState";
 import s from "./ButtonsForSpecialProperty.module.scss";
- 
 type Props = {
   idThing: string;
   listThings: FriendsListType;
