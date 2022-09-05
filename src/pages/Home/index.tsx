@@ -30,7 +30,7 @@ const columnsForDisplay = ["fName", "sName", "age", "friends", "score"];
 const nameForColumns = ["Имя", "Фамилия", "Возраст", "Друзья", "Оценка"];
 
 // Настройки параметров карточки человека DisplayItemCard
-const fildForDisplay = [
+const fieldForDisplay = [
   "fName",
   "sName",
   "age",
@@ -81,7 +81,7 @@ export const Home = (): JSX.Element => {
       </div>
       <div>
         <DisplayItemCard
-          fieldForDisplay={fildForDisplay}
+          fieldForDisplay={fieldForDisplay}
           nameForField={nameForField}
           selectedThing={selectedPerson}
         />

@@ -31,7 +31,7 @@ export type ActionType =
       type: "new";
     };
 
-const reduser: Reducer<StateType, ActionType> = (state, action): StateType => {
+const reducer: Reducer<StateType, ActionType> = (state, action): StateType => {
   const { type } = action;
   switch (type) {
     case "new":
@@ -104,10 +104,10 @@ const columnsNameForBasicInfo = [
 ];
 
 export const Friends = (): JSX.Element => {
-  const [state, dispatch] = useReducer(reduser, { listFriends: {} });
+  const [state, dispatch] = useReducer(reducer, { listFriends: {} });
   const { listFriends } = state;
   const [activateAvatar, setActivateAvatar] = useState<boolean>(true);
-  const [activateSpesialProperty, setSpesialProperty] =
+  const [activateSpecialProperty, setSpecialProperty] =
     useState<HTMLDivElement | null>(null);
 
   const [specialIdSelectedThing, setSpecialIdSelectedThings] = useState<
@@ -125,7 +125,7 @@ export const Friends = (): JSX.Element => {
     <div className={s.maket}>
       <div
         className={
-          activateSpesialProperty ? s.activateSpesialProperty : undefined
+          activateSpecialProperty ? s.activateSpecialProperty : undefined
         }
       >
         <DisplayListThings
@@ -151,12 +151,12 @@ export const Friends = (): JSX.Element => {
             />
             <SpecialPropertyFriend
               idThing={specialIdSelectedThing}
-              activeProperty={activateSpesialProperty}
-              setActiveProperty={setSpesialProperty}
+              activeProperty={activateSpecialProperty}
+              setActiveProperty={setSpecialProperty}
               listThings={listFriends}
               dispatchListThings={dispatch}
             />
-            {activateSpesialProperty ? null : (
+            {activateSpecialProperty ? null : (
               <ButtonsBlock
                 idThing={specialIdSelectedThing}
                 removerSelectedThing={dispatch}

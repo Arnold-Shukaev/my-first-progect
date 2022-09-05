@@ -39,9 +39,13 @@ export const SpecialPropertyFriend = ({
   return (
     <div className={s.additionally}>
       {activeProperty ? null : (
-        <div className={s.specialProperty}>
+        <div className={s.SPScore}>
           <h4 className={s.myScore}>Моя оценка</h4>
-          <Stars/>
+          <Stars
+            listThings={listThings}
+            idThing={idThing}
+            dispatchListThings={dispatchListThings}
+          />
         </div>
       )}
 
