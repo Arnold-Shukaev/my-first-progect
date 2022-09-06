@@ -4,8 +4,11 @@ import style from "./ButtonRequest.module.scss";
 type Props = {
   name: string;
   urlRequest: string;
-  handlerResponse: Dispatch<SetStateAction<any>>;
-  setIdSelectedThing: Dispatch<SetStateAction<any>>;
+  handlerResponse: Dispatch<SetStateAction<any>>; // Убери этот проп
+  setIdSelectedThing: Dispatch<SetStateAction<any>>; // И этот
+  // Сделай такие пропы и в них передавай логику по сохранению результата в стейт и сбросу выбранного id
+  // onResult?: (data: FriendItem[]) => void
+  // onError?: (error: Error) => void
 };
 
 export const ButtonRequest = ({

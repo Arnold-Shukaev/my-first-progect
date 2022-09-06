@@ -1,11 +1,11 @@
-import { Reducer, useReducer, useState, useEffect, useCallback } from "react";
+import { Reducer, useReducer, useState, useEffect, useCallback } from "react"; // Неиспользуемые импорты
 import { ButtonRequest } from "../../components/ButtonRequest";
 import { DisplayItemCard } from "../../components/DisplayItemCard";
 import { DisplayListThings } from "../../components/DisplayListThings";
 import style from "./Home.module.scss";
 
 // Настройка запроса
-const urlParams = {
+const urlParams = { // Вынеси вот эти все параметры в отдельный файл в корень, типа constants.ts
   rows: 20,
   fName: "{firstName}",
   sName: "{lastName}",
@@ -53,6 +53,11 @@ const nameForField = [
   "Телефон",
 ];
 
+// Когда уходишь со страницы Home - список пропадает. Выглядит не очень. Давай сделаем чтобы
+// 1. Заходишь на Home - список первый раз запрашивается сам, без нажатия на кнопку
+// 2. При нажатии на кнопку список обновляется
+// 3. Список не меняется при переходе на другие страницы и возвращении на Home
+
 export const Home = (): JSX.Element => {
   const [listPeopleStorage, setListPeopleStorage] = useState<any[]>([]);
   const [idSelectedPerson, setIdSelectedPerson] = useState<number | null>(null);
@@ -74,7 +79,7 @@ export const Home = (): JSX.Element => {
           idSelectedThing={idSelectedPerson}
           setIdSelectedThings={setIdSelectedPerson}
           nameID={"_id"}
-          listThings={[...listPeopleStorage]}
+          listThings={[...listPeopleStorage]} //Почему не просто listPeopleStorage? Зачем в новый массив оборачивать?
         >
           Нажмите "Найти новых друзей" для отображения данных
         </DisplayListThings>

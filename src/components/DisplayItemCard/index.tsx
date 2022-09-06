@@ -4,11 +4,11 @@ import s from "./DisplayItemCard.module.scss";
 type Props = {
   fieldForDisplay: string[];
   nameForField: string[];
-  selectedThing: any;
+  selectedThing: any; // Тип
 };
 
 function firstLetter(word: string): string {
-  return word[0].toUpperCase();
+  return word[0].toUpperCase(); // Строка может быть пустой же? Будет ошибка
 }
 
 export const DisplayItemCard = ({
@@ -16,10 +16,10 @@ export const DisplayItemCard = ({
   nameForField,
   selectedThing,
 }: Props) => {
-  const { fName = ".", sName = "." } = { ...selectedThing };
+  const { fName = ".", sName = "." } = { ...selectedThing }; // Зачем тут диструктуризация?
   const initials = firstLetter(fName) + firstLetter(sName);
 
-  if (selectedThing === null) {
+  if (selectedThing === null) { // Вынеси эту проверку выше, перед тем как пытаешься читать из selectedThing
     return (
       <div className={s.message}>
         Тут будут сведения о вашем потенциальном друге

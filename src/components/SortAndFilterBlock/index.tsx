@@ -43,10 +43,11 @@ export type StateFilterType = {
   [word: string]: string;
 };
 export function filter(table: any[], filteringRules: StateFilterType) {
-  let countRules = 0;
-  for (let rule in filteringRules) {
-    countRules++;
-  }
+  // let countRules = 0;
+  // for (let rule in filteringRules) {
+  //   countRules++;
+  // }
+  const countRules = Object.keys(filteringRules).length; // Так проще
   if (table.length === 0 || countRules === 0)
     return { resultListThings: table };
 
@@ -55,7 +56,7 @@ export function filter(table: any[], filteringRules: StateFilterType) {
     let nameColumn = rule;
     let substring = filteringRules[rule].toLowerCase();
     resultListThings = resultListThings.filter((thing) =>
-      thing[nameColumn!].toString().toLowerCase().includes(substring)
+      thing[nameColumn].toString().toLowerCase().includes(substring)
     );
   }
 

@@ -1,4 +1,4 @@
-export const interactionLocalStorage = (
+export const interactionLocalStorage = ( // Ты сам то вспомнишь что тут происходит вообще?)
   action: (
     oldObjectSpecialStorage: { [prop: string]: { [prop: string]: string } },
     ...arg: any

@@ -12,9 +12,9 @@ type Props = {
   columnsForDisplay: string[];
   columnsName: string[];
   idSelectedThing: string | number | null;
-  setIdSelectedThings: Dispatch<SetStateAction<any>>;
+  setIdSelectedThings: Dispatch<SetStateAction<any>>; // Этот проп переделай в onSelect?: (thing: FriendItem) => void
   nameID: string;
-  listThings: any[];
+  listThings: any[]; // Опиши тип для элементов списка, там же ничего сложного?)
   children?: string;
 };
 
@@ -33,7 +33,7 @@ export const DisplayListThings = ({
   });
   const [stateFilter, setStateFilter] = useState<StateFilterType>({});
 
-  sort(listThings, stateSort);
+  sort(listThings, stateSort); // Тут sort мутирует listThings который приходит из пропсов, это нехорошо, пропсы должны быть readonly
   const { resultListThings, noFilteringResult = null } = filter(
     listThings,
     stateFilter
@@ -44,10 +44,11 @@ export const DisplayListThings = ({
       <div className={s.defaultText}>{children || "Перечень отсутствует"}</div>
     );
   } else {
+    // Тут else можно вообще убрать
     return (
       <>
         <div className={s.blockTable}>
-          <table className={s.tableThings} onFocus={() => console.log(20)}>
+          <table className={s.tableThings} onFocus={() => console.log(20) /* Что за странный вывод в консоль?)*/}>
             <thead>
               <tr>
                 {columnsName.map((name, id) => (
@@ -66,19 +67,19 @@ export const DisplayListThings = ({
             <tbody>
               {resultListThings.map((thing: any, id: any) => {
                 return (
-                    <tr
-                      key={id}
-                      className={
-                        thing[nameID] === idSelectedThing
-                          ? s.selectedThing
-                          : undefined
-                      }
-                      onClick={() => setIdSelectedThings(thing[nameID])}
-                    >
-                      {columnsForDisplay.map((column, id2) => (
-                        <td key={id2}>{thing[column]}</td>
-                      ))}
-                    </tr>
+                  <tr
+                    key={id}
+                    className={
+                      thing[nameID] === idSelectedThing
+                        ? s.selectedThing
+                        : undefined
+                    }
+                    onClick={() => setIdSelectedThings(thing[nameID])}
+                  >
+                    {columnsForDisplay.map((column, id2) => (
+                      <td key={id2}>{thing[column]}</td>
+                    ))}
+                  </tr>
                 );
               })}
               {noFilteringResult}
