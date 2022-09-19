@@ -1,29 +1,36 @@
 import "./App.scss";
 import { Router } from "./components/Router";
-import { Authorization } from "./pages/Authorization";
+import { Profile } from "./pages/Profile";
 import { Friends } from "./pages/Friends";
 import { Home } from "./pages/Home";
-
-const descriptionRoute = [
-  {
-    pathInBrowser: "/",
-    nameInMenu: "Home",
-    componentForVisualisation: <Home />,
-  },
-  {
-    pathInBrowser: "/friends",
-    nameInMenu: "Friends",
-    componentForVisualisation: <Friends />,
-  },
-  {
-    pathInBrowser: "/authorization",
-    nameInMenu: "Authorization",
-    componentForVisualisation: <Authorization />,
-  },
-];
+import { useState } from "react";
+import { CurrentUserContext } from "./shared";
 
 function App() {
-  return <Router descriptionRoute={descriptionRoute}></Router>;
+  const [currentUser, setCurrentUser] = useState<null | number>(null);
+
+  const descriptionRoute = [
+    {
+      pathInBrowser: "/",
+      nameInMenu: "Home",
+      componentForVisualization: <Home />,
+    },
+    {
+      pathInBrowser: "/friends",
+      nameInMenu: "Friends",
+      componentForVisualization: <Friends />,
+    },
+    {
+      pathInBrowser: "/profile",
+      nameInMenu: "Profile",
+      componentForVisualization: <Profile />,
+    },
+  ];
+  return (
+    <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
+      <Router descriptionRoute={descriptionRoute}></Router>
+    </CurrentUserContext.Provider>
+  );
 }
 
 export default App;

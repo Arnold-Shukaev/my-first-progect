@@ -5,11 +5,11 @@ type Props = {
   descriptionRoute: {
     pathInBrowser: string;
     nameInMenu: string;
-    componentForVisualisation: JSX.Element;
+    componentForVisualization: JSX.Element;
   }[];
 };
-// {pathInBrowser, nameInMenu, componentForVisialization}
-
+// {pathInBrowser, nameInMenu, componentForVisualization}
+ 
 export const Router = ({ descriptionRoute }: Props) => {
   return (
     <BrowserRouter>
@@ -24,11 +24,11 @@ export const Router = ({ descriptionRoute }: Props) => {
       </ul>
       <Routes>
         {descriptionRoute.map(
-          ({ pathInBrowser, componentForVisualisation }, id) => (
+          ({ pathInBrowser, componentForVisualization }, id) => (
             <Route
               key={id}
               path={pathInBrowser}
-              element={componentForVisualisation}
+              element={componentForVisualization}
             />
           )
         )}

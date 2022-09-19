@@ -1,0 +1,22 @@
+@import "../../themes/themes.module.scss";
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 3.2rem;
+  gap: 1rem;
+  height: calc(100vh - 4.6rem);
+  
+  
+  > div {
+    background-color: $color-fon;
+    text-align: center;
+    border-radius: 1rem;
+
+    display: grid;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+  }
+
+}

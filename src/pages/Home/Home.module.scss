@@ -24,6 +24,7 @@
     > div:nth-child(2) {
         align-items: flex-start;
         overflow-y: auto;
+        overflow-x: hidden;
     }
 
     @media (max-width: 650px) {

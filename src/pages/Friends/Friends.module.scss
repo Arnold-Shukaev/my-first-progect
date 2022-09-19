@@ -25,12 +25,13 @@
     @media (max-width: 650px) {
         
         grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr;
+        grid-template-rows: auto 2fr;
         
         & > :first-child {
             max-height: 25vh;
+            min-height: 4.4rem;
         }
-        .activateSpesialProperty{
+        .activateSpecialProperty{
             height: 0;
             margin: 0;
             padding: 0;

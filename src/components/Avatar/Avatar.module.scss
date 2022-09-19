@@ -5,7 +5,7 @@
     grid-template-columns: 60px 1fr;
     align-items: center;
 }
-.imageThing {
+.textThing {
     position: relative;
     margin: 5% auto 0;
     max-width: 70%;
@@ -14,15 +14,14 @@
     border-radius: 50%;
     cursor: pointer;
 
-
-    > div {
+    > .notPhoto {
         font-family: 'Courier New', Courier, monospace;
         position: absolute;
         font-size: 3rem;
         top: calc(50% - 1.6rem);
         left: calc(50% - 1.8rem);
     }
-
+    
 }
 
 .nameThing {
@@ -33,3 +32,4 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+

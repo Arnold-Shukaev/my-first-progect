@@ -1,4 +1,5 @@
-import { interactionLocalStorage } from "../../shared";
+import { useContext } from "react";
+import { CurrentUserContext, interactionLocalStorageShared } from "../../shared";
 import s from "./ButtonAddFriend.module.scss";
 
 type Props = {
@@ -6,10 +7,13 @@ type Props = {
 };
 
 export const ButtonAddFriend = ({ selectedThing }: Props) => {
+  const {currentUser} = useContext(CurrentUserContext)
+  
   function handlerClick() {
     let specialId: string =
       selectedThing.fName + selectedThing.sName + selectedThing._id;
-    interactionLocalStorage(
+    interactionLocalStorageShared(
+      'specialStorage' + currentUser,
       (oldStorage, ...arg) => {
         oldStorage[arg[0][0]] = { ...arg[0][1] };
       },

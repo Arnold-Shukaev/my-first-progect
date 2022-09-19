@@ -20,10 +20,10 @@ export const Avatar = ({
   return (
     <div className={activateStatus ? undefined : s.statusNotActive}>
       <div
-        className={s.imageThing}
+        className={selectedThing.imgUrl ? s.imageThing : s.textThing}
         onClick={() => setActivateStatus((prev) => !prev)}
       >
-        <div>
+        <div className={s.notPhoto}>
           {firstLetter(selectedThing.fName) + firstLetter(selectedThing.sName)}
         </div>
       </div>

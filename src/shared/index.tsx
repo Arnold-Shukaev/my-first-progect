@@ -1,17 +1,45 @@
-export const interactionLocalStorage = (
+import { createContext, Dispatch, SetStateAction } from "react";
+
+type CUCType = {
+  currentUser: number | null;
+  setCurrentUser: Dispatch<SetStateAction<any>> | null;
+};
+
+export const CurrentUserContext = createContext<CUCType>({
+  currentUser: null,
+  setCurrentUser: null,
+});
+
+export const interactionLocalStorageShared = (
+  path: string,
   action: (
-    oldObjectSpecialStorage: { [prop: string]: { [prop: string]: string } },
+    oldObjectInLS: { [prop: string]: { [prop: string]: any } },
     ...arg: any
   ) => void,
   ...args: any
 ) => {
-  let newSpecialStorage;
-  localStorage.specialStorage
-    ? (newSpecialStorage = JSON.parse(localStorage.specialStorage))
-    : (newSpecialStorage = {});
-  action(newSpecialStorage, args);
+  let newObjectInLS;
 
-  localStorage.setItem("specialStorage", JSON.stringify(newSpecialStorage));
+  if (localStorage[path]) {
+    newObjectInLS = JSON.parse(localStorage[path]);
+  } else {
+    switch (path) {
+      case "messengerUsers":
+        newObjectInLS = {
+          idFromGoogle: {},
+          passwords: {},
+          email: {},
+          allUsers: { countUsers: 0 },
+        };
+        break;
+      default:
+        newObjectInLS = {};
+        break;
+    }
+  }
+  action(newObjectInLS, args);
 
-  return newSpecialStorage;
+  localStorage.setItem(path, JSON.stringify(newObjectInLS));
+
+  return newObjectInLS;
 };

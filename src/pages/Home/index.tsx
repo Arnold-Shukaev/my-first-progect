@@ -1,7 +1,9 @@
-import { Reducer, useReducer, useState, useEffect, useCallback } from "react";
+import { useContext, useState } from "react";
 import { ButtonRequest } from "../../components/ButtonRequest";
 import { DisplayItemCard } from "../../components/DisplayItemCard";
 import { DisplayListThings } from "../../components/DisplayListThings";
+import { NotCurrentUser } from "../../components/NotCurrentUser";
+import { CurrentUserContext } from "../../shared";
 import style from "./Home.module.scss";
 
 // Настройка запроса
@@ -19,8 +21,8 @@ const urlParams = {
 };
 
 // const urlRequest = 'http://filltext.com/?' + Object.entries(urlParams).map( param => `${param[0]}=${param[1]}`).join('&') ;
-// Тут проще и правильней будет сделать так, чтобы не возиться c подстановкой значение в строку 
-const urlRequest = new URL('http://filltext.com');
+// Тут проще и правильней будет сделать так, чтобы не возиться c подстановкой значение в строку
+const urlRequest = new URL("http://filltext.com");
 Object.entries(urlParams).forEach(([key, value]) => {
   urlRequest.searchParams.append(key, String(value));
 });
@@ -54,38 +56,44 @@ const nameForField = [
 ];
 
 export const Home = (): JSX.Element => {
+  const { currentUser } = useContext(CurrentUserContext);
+
   const [listPeopleStorage, setListPeopleStorage] = useState<any[]>([]);
   const [idSelectedPerson, setIdSelectedPerson] = useState<number | null>(null);
   let selectedPerson =
     idSelectedPerson === null ? null : listPeopleStorage[idSelectedPerson];
 
-  return (
-    <div className={style.maket}>
-      <div>
-        <ButtonRequest
-          name="Найти новых друзей"
-          urlRequest={urlRequest.toString()}
-          handlerResponse={setListPeopleStorage}
-          setIdSelectedThing={setIdSelectedPerson}
-        />
-        <DisplayListThings
-          columnsForDisplay={columnsForDisplay}
-          columnsName={nameForColumns}
-          idSelectedThing={idSelectedPerson}
-          setIdSelectedThings={setIdSelectedPerson}
-          nameID={"_id"}
-          listThings={[...listPeopleStorage]}
-        >
-          Нажмите "Найти новых друзей" для отображения данных
-        </DisplayListThings>
+  if (currentUser === null) {
+    return <NotCurrentUser />;
+  } else {
+    return (
+      <div className={style.maket}>
+        <div>
+          <ButtonRequest
+            name="Найти новых друзей"
+            urlRequest={urlRequest.toString()}
+            handlerResponse={setListPeopleStorage}
+            setIdSelectedThing={setIdSelectedPerson}
+          />
+          <DisplayListThings
+            columnsForDisplay={columnsForDisplay}
+            columnsName={nameForColumns}
+            idSelectedThing={idSelectedPerson}
+            setIdSelectedThings={setIdSelectedPerson}
+            nameID={"_id"}
+            listThings={[...listPeopleStorage]}
+          >
+            Нажмите "Найти новых друзей" для отображения данных
+          </DisplayListThings>
+        </div>
+        <div>
+          <DisplayItemCard
+            fieldForDisplay={fieldForDisplay}
+            nameForField={nameForField}
+            selectedThing={selectedPerson}
+          />
+        </div>
       </div>
-      <div>
-        <DisplayItemCard
-          fieldForDisplay={fieldForDisplay}
-          nameForField={nameForField}
-          selectedThing={selectedPerson}
-        />
-      </div>
-    </div>
-  );
+    );
+  }
 };

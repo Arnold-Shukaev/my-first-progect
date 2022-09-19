@@ -1,0 +1,27 @@
+@import "../../themes/themes.module.scss";
+
+
+.indicatorInvalided{
+  position: absolute;
+  background-color: rgba(210, 57, 57, 0.5);
+  border-radius: 1.5rem;
+  height: 3rem;
+  width: 3rem;
+  top: 0.7rem;
+  left: 23rem;
+
+  text-align: center;
+  line-height: 3rem;
+}
+.messageInvalid {
+  position: absolute;
+  left: -23rem;
+  width: 21.9rem;
+  top: 0;
+  font-size: 1.2rem;
+
+  border: 2px solid red;
+  border-radius: 1rem;
+  background: rgb(178, 174, 233);
+  z-index: 1000;
+}

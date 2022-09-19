@@ -1,0 +1,18 @@
+.messageDiv {
+  position: absolute;
+  height: 13rem;
+  background-color: red;
+
+  left: 0;
+  width: 22rem;
+  top: -2rem;
+  font-size: 1.6rem;
+
+  border: 2px solid red;
+  border-radius: 1rem;
+  background: rgb(178, 174, 233);
+  z-index: 1000;
+
+  text-align: center;
+  padding-top: 4.2rem;
+}
