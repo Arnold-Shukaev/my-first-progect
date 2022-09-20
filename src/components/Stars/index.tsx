@@ -14,7 +14,11 @@ function viewStars(countStars: number) {
   for (let i = 0; i < 5; i++) arr.push(<Star active={countStars > i} />);
   return arr;
 }
-export const Stars = ({ listThings, idThing, dispatchListThings }: Props) => {
+export const Stars = ({
+  listThings,
+  idThing,
+  dispatchListThings,
+}: Props): JSX.Element => {
   const countStars = +listThings[idThing].stars | 0;
   const arrStars = viewStars(countStars);
 

@@ -3,15 +3,8 @@ import style from "./ButtonRequest.module.scss";
 type Props = {
   name: string;
   urlRequest: string;
-  // handlerResponse: Dispatch<SetStateAction<any>>; // Убери этот проп
   onResult: (data: Record<string, string>[]) => void;
-  onSelectedThing: (state: null) => void; // И этот
-  // Сделай такие пропы и в них передавай логику по сохранению результата в стейт и сбросу выбранного id
-  // onResult?: (data: FriendItem[]) => void
-  // onError?: (error: Error) => void
-
-  //АА. Тут я маленько не допер!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //Вроде допер. Но обработчика ошибки тут нет
+  onSelectedThing: (state: null) => void;
 };
 
 export function requestFriendsList(
@@ -35,7 +28,7 @@ export const ButtonRequest = ({
   urlRequest,
   onResult,
   onSelectedThing,
-}: Props) => {
+}: Props): JSX.Element => {
   return (
     <button
       onClick={() => requestFriendsList(urlRequest, onSelectedThing, onResult)}

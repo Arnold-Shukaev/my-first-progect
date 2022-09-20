@@ -3,11 +3,9 @@ type Props = {
   propertyValue: boolean;
 };
 
-export const NotificationOfChange = ({ propertyValue }: Props) => {
-  const handlerMove = () => {
-    
-  };
-
+export const NotificationOfChange = ({ propertyValue }: Props): JSX.Element => {
+  const handlerMove = () => {};
+//TODO: Что это?
   return (
     <>
       {!propertyValue ? null : (

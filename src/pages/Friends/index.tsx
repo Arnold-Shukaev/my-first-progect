@@ -4,7 +4,7 @@ import { ButtonsBlock } from "../../components/ButtonsBlock";
 
 import { DisplayListThings } from "../../components/DisplayListThings";
 import { NotCurrentUser } from "../../components/NotCurrentUser";
-import { SpecialPropertyFriend } from "../../components/SpecialPropertysFriend";
+import { SpecialPropertyFriend } from "../../components/SpecialPropertyFriend";
 import {
   CurrentUserContext,
   openObjInStorage,
@@ -97,16 +97,16 @@ export const Friends = (): JSX.Element => {
           alert("Сначала выберите 'бывшего' для удаления");
           return state;
         }
-        const storageUser = openObjInStorage("specialStorage" + currentUser)
-        delete storageUser[action.idThing]
-        saveObjInStorage("specialStorage" + currentUser, storageUser)
+        const storageUser = openObjInStorage("specialStorage" + currentUser);
+        delete storageUser[action.idThing];
+        saveObjInStorage("specialStorage" + currentUser, storageUser);
         return { listFriends: storageUser };
 
       case "update":
         if (action.idThing === null) return state;
-        const storageUserAdd = openObjInStorage("specialStorage" + currentUser)
+        const storageUserAdd = openObjInStorage("specialStorage" + currentUser);
         storageUserAdd[action.idThing][action.nameProperty] = action.newValue;
-        saveObjInStorage("specialStorage" + currentUser, storageUserAdd)
+        saveObjInStorage("specialStorage" + currentUser, storageUserAdd);
         return { listFriends: storageUserAdd };
       default:
         return { listFriends: {} };
@@ -136,7 +136,7 @@ export const Friends = (): JSX.Element => {
     return <NotCurrentUser />;
   } else {
     return (
-      <div className={s.maket}>
+      <div className={s.layout}>
         <div
           className={
             activateSpecialProperty ? s.activateSpecialProperty : undefined

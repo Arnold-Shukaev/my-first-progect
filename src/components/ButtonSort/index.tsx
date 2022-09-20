@@ -4,19 +4,15 @@ import s from "./ButtonSort.module.scss";
 type Props = {
   nameParam: string;
   stateSort: StateSortType;
-  // Почему тут any?
-  //ОК исправлено с any
   onSortChange: (stateSort: StateSortType) => void;
-  // И тут?
-  //ОК исправлено с any
-
-  // лучше переименовать этот проп в onSortChange: (sortState: SortState) => void
-  // Готово
 };
 
-export const ButtonSort = ({ nameParam, stateSort, onSortChange }: Props) => {
+export const ButtonSort = ({
+  nameParam,
+  stateSort,
+  onSortChange,
+}: Props): JSX.Element => {
   const { columnForSorting, sortingType } = stateSort;
-  // const refButton = useRef<HTMLButtonElement>(null);
 
   function handleClickButton() {
     if (columnForSorting !== nameParam) {
@@ -36,9 +32,7 @@ export const ButtonSort = ({ nameParam, stateSort, onSortChange }: Props) => {
       }
 
       onSortChange({
-        columnForSorting: nameParam, // Зачем хранить рефы на кнопки, можно же просто имя столбца использовать?
-        //TODO: !!!!!!АА. Надо с тобой поговорить. Что конкретно ты имеешь в виду?
-        // Походу разобрался
+        columnForSorting: nameParam,
         sortingType: newSortingType,
       });
     }
@@ -58,40 +52,9 @@ export const ButtonSort = ({ nameParam, stateSort, onSortChange }: Props) => {
       }
     }
   }
-  // useEffect(() => {
-  //   if (columnForSorting === refButton.current) {
-  //     //     sortingType === "none"
-  //     //       ? (refButton.current!.innerHTML = "") // обращение к innerHTML через ref это не React way. Тебе тут вообще ref не нужен, зачем с ним возиться?
-  //     //       //TODO: ДОПОЛНИТЕЛЬНО ПЕРЕВАРИТЬ И ПЕРЕДЕЛАТЬ
-  //     //       : sortingType === "asc"
-  //     //       ? (refButton.current!.innerHTML = "&#8659")
-  //     //       : (refButton.current!.innerHTML = "&#8657"); // Такую цепочку тернарных операторов очень сложно читать, обычно их избегают. Лучше использовать switch
-  //     // //ОК
-
-  //     switch (sortingType) {
-  //       case "none":
-  //         refButton.current!.innerHTML = "";
-  //         break;
-  //       case "asc":
-  //         refButton.current!.innerHTML = "&#8659";
-  //         break;
-  //       case "desc":
-  //         refButton.current!.innerHTML = "&#8657";
-  //         break;
-  //     }
-  //   } else {
-  //     refButton.current!.innerHTML = "";
-  //   }
-  // }, [columnForSorting, sortingType]);
 
   return (
-    <button
-      className={s.sortButton}
-      // ref={refButton}
-      onClick={handleClickButton}
-      // data-name-param={nameParam} // Зачем этот параметр?)
-      //АА. Используется родителем для сортировки
-    >
+    <button className={s.sortButton} onClick={handleClickButton}>
       {whichSymbol()}
     </button>
   );

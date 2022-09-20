@@ -15,16 +15,14 @@
   border-radius: 1rem;
   overflow-y: auto;
 
-  // input {
-  //   background-color: transparent;
-  // }
-
-  > div, form, form > div {
+  > div,
+  form,
+  form > div {
     text-align: left;
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.5rem;
-    position:relative
+    position: relative;
   }
   input {
     background-color: transparent;
@@ -34,7 +32,7 @@
     font-size: 1.6rem;
     outline: none;
   }
-  label{
+  label {
     position: absolute;
     top: 1rem;
     left: 1.1rem;
@@ -54,7 +52,7 @@
     background-color: transparent;
   }
 
-  h3{
+  h3 {
     margin: 3rem;
   }
 }

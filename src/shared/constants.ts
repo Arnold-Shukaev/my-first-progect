@@ -1,7 +1,5 @@
 // Настройка запроса
-export const urlParams = { // Вынеси вот эти все параметры в отдельный файл в корень, типа constants.ts
-  //TODO: СДЕЛАТЬ!!!!!
-  rows: 20,
+export const urlParams = {
   fName: "{firstName}",
   sName: "{lastName}",
   age: "{numberRange|16, 85}",
@@ -13,9 +11,6 @@ export const urlParams = { // Вынеси вот эти все параметр
   fromCity: "{city}",
 };
 
-// const urlRequest = 'http://filltext.com/?' + Object.entries(urlParams).map( param => `${param[0]}=${param[1]}`).join('&') ;
-// Тут проще и правильней будет сделать так, чтобы не возиться c подстановкой значение в строку
-//TODO: Проверить!!!! Вроде учел уже!
 export const urlRequest = new URL("http://filltext.com");
 Object.entries(urlParams).forEach(([key, value]) => {
   urlRequest.searchParams.append(key, String(value));

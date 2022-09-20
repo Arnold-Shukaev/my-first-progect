@@ -83,7 +83,7 @@ export const InputWithActivatingState = ({
   setActiveProperty,
   listThings,
   dispatchListThings,
-}: Props) => {
+}: Props): JSX.Element => {
   const revText = useRef<HTMLDivElement>(null);
   const refAllBlock = useRef<HTMLDivElement>(null);
   const [editableValue, setEditableValue] = useState<string>("");
@@ -93,7 +93,7 @@ export const InputWithActivatingState = ({
   );
   const { beginEdited, readingNotSavedData, thisNotSaved } = stateButton;
 
-  //TODO: на сколько корректно так делать?
+  //TODO: Юр! на сколько корректно так делать?
   //Я создал отдельный state и слушатель, чтобы делать ререндер компонента при изменении размера экрана
   const [state, setState] = useState({
     h: document.documentElement.clientHeight,
@@ -159,13 +159,15 @@ export const InputWithActivatingState = ({
     };
   });
 
-  //TODO: ID наверное не рекомендуется использовать вообще?
+  //TODO: Юр! ID наверное не рекомендуется использовать вообще?
   return (
     <>
       <label htmlFor={propertyName + "InputWithActivatingState"}>
         <h4 className={s.labelProperty}>
           <NotificationOfChange
-            propertyValue={Boolean (listThings[idThing][propertyName + 'NotSaved'])}
+            propertyValue={Boolean(
+              listThings[idThing][propertyName + "NotSaved"]
+            )}
           />
           {label}
         </h4>

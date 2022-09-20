@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect } from "react";
 import { ActionType, FriendsListType } from "../../pages/Friends";
 import { InputWithActivatingState } from "../InputWithActivatingState";
 import { Stars } from "../Stars";
-import s from "./SpecialPropertysFriend.module.scss";
+import s from "./SpecialPropertyFriend.module.scss";
 
 type Props = {
   idThing: string | null;

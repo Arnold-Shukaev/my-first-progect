@@ -1,23 +1,22 @@
-@import '../../themes/themes.module.scss';
+@import "../../themes/themes.module.scss";
 
 .router {
-    display: flex;
-    list-style: none;
-    justify-content: space-around;
-    background-color: $color-theme-router;
+  display: flex;
+  list-style: none;
+  justify-content: space-around;
+  background-color: $color-theme-router;
 
-    span{
-        display: block;
-        padding: 1rem;
-        background-color: $color-theme-router;
-        border-radius: 1rem;
-        text-decoration: none;
-        color: $color-text-router;
-        width: 12rem;
-        text-align: center;
-    }
-    a{
-        text-decoration: none;
- 
-    }
+  span {
+    display: block;
+    padding: 1rem;
+    background-color: $color-theme-router;
+    border-radius: 1rem;
+    text-decoration: none;
+    color: $color-text-router;
+    width: 12rem;
+    text-align: center;
+  }
+  a {
+    text-decoration: none;
+  }
 }

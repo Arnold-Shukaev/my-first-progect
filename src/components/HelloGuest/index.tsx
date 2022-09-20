@@ -1,19 +1,17 @@
-import { Dispatch, SetStateAction, useContext, useEffect, useRef } from "react";
-import { GoogleLogout } from "react-google-login";
+import { Dispatch, SetStateAction, useContext, useRef } from "react";
 import { CurrentUserContext } from "../../shared";
 import { Authorization } from "../Authorization";
-import { AuthorizedUser } from "../AuthorizedUser";
 import s from "./HelloGuest.module.scss";
 
 type Props = {
   setRegistration: Dispatch<SetStateAction<boolean>>;
 };
 
-export const HelloGuest = ({ setRegistration }: Props) => {
+export const HelloGuest = ({ setRegistration }: Props): JSX.Element => {
   const { setCurrentUser } = useContext(CurrentUserContext);
   const revEmailUser = useRef<HTMLInputElement>(null);
   const revPasswordUser = useRef<HTMLInputElement>(null);
-
+  //TODO: Юр! Что скажешь тут по поводу Ref
   const messageOfError = () => {
     const messageDiv = document.createElement("div");
     messageDiv.className = s.messageDiv;
@@ -73,9 +71,13 @@ export const HelloGuest = ({ setRegistration }: Props) => {
           Или зарегистрируйся
         </button>
 
-<br></br>
-<br></br>
-        <button onClick={ () => console.log(JSON.parse(localStorage.messengerUsers)) }>Подглядеть localStorage</button>
+        <br></br>
+        <br></br>
+        <button
+          onClick={() => console.log(JSON.parse(localStorage.messengerUsers))}
+        >
+          Подглядеть localStorage
+        </button>
       </div>
     </>
   );

@@ -19,13 +19,13 @@ type Props = {
 };
 type settingsType = [RefObject<HTMLInputElement>, string, string][];
 
-export const Registration = ({ setRegistrationStarted }: Props) => {
+export const Registration = ({ setRegistrationStarted }: Props): JSX.Element => {
   const [stateNotValid, setStateNotValid] = useState<
     [HTMLInputElement, string][]
   >([]);
 
   const { setCurrentUser } = useContext(CurrentUserContext);
-
+//TODO: Юр! Подумать об уходе от Ref
   const refFName = useRef<HTMLInputElement>(null);
   const refSName = useRef<HTMLInputElement>(null);
   const refEMail = useRef<HTMLInputElement>(null);
@@ -171,8 +171,6 @@ export const Registration = ({ setRegistrationStarted }: Props) => {
       elements.forEach((elem) => elem.remove());
     };
   }, [stateNotValid]);
-
-  //Надо сделать проверку регистрации
 
   return (
     <>

@@ -10,7 +10,7 @@ export const BasicInfoThing = ({
   thing,
   paramForDisplay,
   nameParamForDisplay,
-}: Props) => {
+}: Props): JSX.Element => {
   if (thing === null) return <></>;
   return (
     <div className={s.basicInfo}>

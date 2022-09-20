@@ -1,35 +1,33 @@
-@import '../../themes/themes.module.scss';
+@import "../../themes/themes.module.scss";
 
 .statusNotActive {
-    display: grid;
-    grid-template-columns: 60px 1fr;
-    align-items: center;
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  align-items: center;
 }
 .textThing {
-    position: relative;
-    margin: 5% auto 0;
-    max-width: 70%;
-    padding: 35%;
-    background-color: orange;
-    border-radius: 50%;
-    cursor: pointer;
+  position: relative;
+  margin: 5% auto 0;
+  max-width: 70%;
+  padding: 35%;
+  background-color: orange;
+  border-radius: 50%;
+  cursor: pointer;
 
-    > .notPhoto {
-        font-family: 'Courier New', Courier, monospace;
-        position: absolute;
-        font-size: 3rem;
-        top: calc(50% - 1.6rem);
-        left: calc(50% - 1.8rem);
-    }
-    
+  > .notPhoto {
+    font-family: "Courier New", Courier, monospace;
+    position: absolute;
+    font-size: 3rem;
+    top: calc(50% - 1.6rem);
+    left: calc(50% - 1.8rem);
+  }
 }
 
 .nameThing {
-    text-align: center;
-    color: orange;
-    font-weight: bolder;
-    margin: 0.5rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  text-align: center;
+  color: orange;
+  font-weight: bolder;
+  margin: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-

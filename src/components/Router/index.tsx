@@ -8,9 +8,8 @@ type Props = {
     componentForVisualization: JSX.Element;
   }[];
 };
-// {pathInBrowser, nameInMenu, componentForVisualization}
- 
-export const Router = ({ descriptionRoute }: Props) => {
+
+export const Router = ({ descriptionRoute }: Props): JSX.Element => {
   return (
     <BrowserRouter>
       <ul className={style.router}>

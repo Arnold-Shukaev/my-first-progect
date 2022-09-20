@@ -15,7 +15,7 @@ export const Avatar = ({
   selectedThing,
   activateStatus,
   setActivateStatus,
-}: Props) => {
+}: Props): JSX.Element => {
   if (selectedThing === null) return <></>;
   return (
     <div className={activateStatus ? undefined : s.statusNotActive}>

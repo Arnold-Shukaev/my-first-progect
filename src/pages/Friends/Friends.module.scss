@@ -1,41 +1,40 @@
-@import '../../themes/themes.module.scss';
+@import "../../themes/themes.module.scss";
 
-.maket {
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  padding: 3.2rem;
+  gap: 1rem;
+  height: calc(100vh - 4.6rem);
+
+  > div {
+    background-color: $color-fon;
+    border-radius: 1rem;
+    max-height: calc(100vh - 11rem);
+  }
+
+  > div:nth-child(2) {
     display: grid;
-    grid-template-columns: 1fr 2fr;
-    padding: 3.2rem;
-    gap: 1rem;
-    height: calc(100vh - 4.6rem);
+    grid-template-rows: auto 3fr auto;
+    align-content: stretch;
+    overflow: hidden;
+    padding: 1rem;
+    row-gap: 1rem;
+  }
 
-    > div {
-        background-color: $color-fon;
-        border-radius: 1rem;
-        max-height: calc(100vh - 11rem);
-    }
+  @media (max-width: 650px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 2fr;
 
-    > div:nth-child(2) {
-        display: grid;
-        grid-template-rows: auto 3fr auto;
-        align-content: stretch;
-        overflow: hidden;
-        padding: 1rem;
-        row-gap: 1rem;
+    & > :first-child {
+      max-height: 25vh;
+      min-height: 4.4rem;
     }
-
-    @media (max-width: 650px) {
-        
-        grid-template-columns: 1fr;
-        grid-template-rows: auto 2fr;
-        
-        & > :first-child {
-            max-height: 25vh;
-            min-height: 4.4rem;
-        }
-        .activateSpecialProperty{
-            height: 0;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
+    .activateSpecialProperty {
+      height: 0;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
     }
+  }
 }

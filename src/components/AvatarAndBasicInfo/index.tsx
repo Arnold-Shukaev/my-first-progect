@@ -16,7 +16,7 @@ export const AvatarAndBasicInfo = ({
   setActivateStatus,
   paramForDisplay,
   nameParamForDisplay,
-}: Props) => {
+}: Props): JSX.Element => {
   return (
     <div className={activateStatus ? s.avatarAndBasicActive : undefined}>
       <Avatar

@@ -12,11 +12,9 @@ type Props = {
   columnsForDisplay: string[];
   columnsName: string[];
   idSelectedThing: string | null;
-  onSelectedThings: (thing: string | null) => void; // Этот проп переделай в onSelect?: (thing: FriendItem) => void
-  //ОК готово
+  onSelectedThings: (thing: string | null) => void;
   nameID: string;
-  listThings: Record<string, string>[]; // Опиши тип для элементов списка, там же ничего сложного?)
-  //ОК готово
+  listThings: Record<string, string>[];
   children?: string;
 };
 
@@ -28,7 +26,7 @@ export const DisplayListThings = ({
   nameID,
   listThings,
   children,
-}: Props) => {
+}: Props): JSX.Element => {
   const [stateSort, setStateSort] = useState<StateSortType>({
     columnForSorting: null,
     sortingType: "none",
@@ -36,7 +34,7 @@ export const DisplayListThings = ({
   const [stateFilter, setStateFilter] = useState<StateFilterType>({});
 
   sort(listThings, stateSort); // Тут sort мутирует listThings который приходит из пропсов, это нехорошо, пропсы должны быть readonly
-  // АА. Это к тому вопросу, почему передаю копию. Вопрос закрыт, или надо переделывать???
+  // TODO: Юр! Что делаем с мутацией
   const { resultListThings, noFilteringResult = null } = filter(
     listThings,
     stateFilter
@@ -47,14 +45,10 @@ export const DisplayListThings = ({
       <div className={s.defaultText}>{children || "Перечень отсутствует"}</div>
     );
   }
-  // Тут else можно вообще убрать
-  // ОК готово
   return (
     <>
       <div className={s.blockTable}>
-        <table
-          className={s.tableThings}
-        >
+        <table className={s.tableThings}>
           <thead>
             <tr>
               {columnsName.map((name, id) => (

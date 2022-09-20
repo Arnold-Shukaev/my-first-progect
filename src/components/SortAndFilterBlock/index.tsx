@@ -10,19 +10,16 @@ type Props = {
   setStateSort: Dispatch<SetStateAction<StateSortType>>;
   setStateFilter: Dispatch<SetStateAction<StateFilterType>>;
 };
-export type StateSortTypeType = 'none'|'asc'|'desc';
+export type StateSortTypeType = "none" | "asc" | "desc";
 export type StateSortType = {
-  // columnForSorting: HTMLButtonElement | null;
   columnForSorting: string | null;
-
-  sortingType: StateSortTypeType ;
+  sortingType: StateSortTypeType;
 };
 export function sort(
   table: any[],
   { columnForSorting, sortingType }: StateSortType
 ) {
   if (table.length === 0 || columnForSorting === null) return table;
-  // const columnSorting = columnForSorting.dataset.nameParam!;
   switch (sortingType) {
     case "none":
       table.sort((a: any, b: any) => a._id - b._id);
@@ -46,12 +43,7 @@ export type StateFilterType = {
   [word: string]: string;
 };
 export function filter(table: any[], filteringRules: StateFilterType) {
-  // let countRules = 0;
-  // for (let rule in filteringRules) {
-  //   countRules++;
-  // }
-  const countRules = Object.keys(filteringRules).length; // Так проще
-  //TODO: Исправлено
+  const countRules = Object.keys(filteringRules).length;
   if (table.length === 0 || countRules === 0)
     return { resultListThings: table };
 
@@ -61,7 +53,6 @@ export function filter(table: any[], filteringRules: StateFilterType) {
     let substring = filteringRules[rule].toLowerCase();
     resultListThings = resultListThings.filter((thing) =>
       thing[nameColumn].toString().toLowerCase().includes(substring)
-      //TODO: ИСПРАВЛЕНО
     );
   }
 
@@ -82,7 +73,7 @@ export const SortAndFilterBlock = ({
   stateSort,
   setStateSort,
   setStateFilter,
-}: Props) => {
+}: Props): JSX.Element => {
   return (
     <div className={s.sortBlock}>
       <InputForFilter

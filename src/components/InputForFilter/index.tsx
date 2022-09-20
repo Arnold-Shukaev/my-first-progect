@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useRef } from "react";
 import { StateFilterType } from "../SortAndFilterBlock";
-import s from './InputForFilter.module.scss';
+import s from "./InputForFilter.module.scss";
 
 type Props = {
   nameButton: string;
@@ -12,7 +12,7 @@ export const InputForFilter = ({
   nameButton,
   nameParam,
   setStateFilter,
-}: Props) => {
+}: Props): JSX.Element => {
   const lengthInput = nameButton.length - 1;
   const refInput = useRef<HTMLInputElement>(null);
 

@@ -1,27 +1,33 @@
-@import '../../themes/themes.module.scss';
+@import "../../themes/themes.module.scss";
 
-.repeat, .notSave {
-    background-color: $color-button-warning-yes;
-    color: $color-text-warning;
-    border-color: $color-text-warning;
-    &:hover{background-color: $color-button-warning-yes-hover;}
+.repeat,
+.notSave {
+  background-color: $color-button-warning-yes;
+  color: $color-text-warning;
+  border-color: $color-text-warning;
+  &:hover {
+    background-color: $color-button-warning-yes-hover;
+  }
 }
-.noClear, .save {
-    background-color: $color-button-warning-no;
-    &:hover{background-color: $color-button-warning-no-hover;}
+.noClear,
+.save {
+  background-color: $color-button-warning-no;
+  &:hover {
+    background-color: $color-button-warning-no-hover;
+  }
 }
 
 .repeat,
 .repeat:hover,
 .noClear,
 .save,
-.notSave{
-    font-weight: bolder;
-    padding-top: 3rem;
-    padding-bottom: 3rem;
+.notSave {
+  font-weight: bolder;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
 .twoButton {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }

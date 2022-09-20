@@ -3,7 +3,7 @@ import { GoogleLogout } from "react-google-login";
 import { CurrentUserContext } from "../../shared";
 import s from "./AuthorizedUser.module.scss";
 
-export const AuthorizedUser = () => {
+export const AuthorizedUser = (): JSX.Element => {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [stateInfoBlock, setStateInfoBlock] = useState<boolean>(true);
   const currentUserParams = JSON.parse(localStorage.messengerUsers).allUsers[
@@ -15,6 +15,7 @@ export const AuthorizedUser = () => {
   const userHaveImg = currentUserParams.imgUrl !== null;
 
   //TODO: добить окно профиля
+  //TODO: Юр! Опять - долой тернарник?
   return (
     <div className={s.layout}>
       <div className={s.grid}>

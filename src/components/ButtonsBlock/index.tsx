@@ -7,7 +7,7 @@ type Props = {
   idThing: string | null;
   removerSelectedThing: Dispatch<ActionType>;
 };
-export const ButtonsBlock = ({ idThing, removerSelectedThing }: Props) => {
+export const ButtonsBlock = ({ idThing, removerSelectedThing }: Props): JSX.Element => {
   return (
     <div className={s.action}>
       <ButtonRemoveFriend

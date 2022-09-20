@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import s from "./NotCurrentUser.module.scss";
 
-export const NotCurrentUser = () => {
+export const NotCurrentUser = (): JSX.Element => {
   return (
     <div className={s.layout}>
       <div>

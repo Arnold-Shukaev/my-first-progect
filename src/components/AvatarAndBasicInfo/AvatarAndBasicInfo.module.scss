@@ -1,9 +1,9 @@
 .avatarAndBasicActive {
-    display: grid;
-    grid-template-columns: 120px 1fr;
+  display: grid;
+  grid-template-columns: 120px 1fr;
 
-    > div:nth-child(2) {
-        text-overflow: ellipsis;
-        overflow: hidden;
-    }
+  > div:nth-child(2) {
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 }

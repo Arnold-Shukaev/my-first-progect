@@ -57,11 +57,11 @@ const checkingAndCreateUserFromGoogle = (res: any): UserType => {
     thisNewUser = true;
   }
 
-  saveObjInStorage("messengerUsers", storageUsers)
+  saveObjInStorage("messengerUsers", storageUsers);
   return { thisNewUser, idUser: numUser };
 };
 
-export const Authorization = () => {
+export const Authorization = (): JSX.Element => {
   const { setCurrentUser } = useContext(CurrentUserContext);
 
   const clientId =
