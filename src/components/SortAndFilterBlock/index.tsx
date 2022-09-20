@@ -48,6 +48,7 @@ export function filter(table: any[], filteringRules: StateFilterType) {
   //   countRules++;
   // }
   const countRules = Object.keys(filteringRules).length; // Так проще
+  //TODO: Исправить!!!
   if (table.length === 0 || countRules === 0)
     return { resultListThings: table };
 
@@ -57,6 +58,7 @@ export function filter(table: any[], filteringRules: StateFilterType) {
     let substring = filteringRules[rule].toLowerCase();
     resultListThings = resultListThings.filter((thing) =>
       thing[nameColumn].toString().toLowerCase().includes(substring)
+      //TODO: ИСПРАВИТЬ
     );
   }
 

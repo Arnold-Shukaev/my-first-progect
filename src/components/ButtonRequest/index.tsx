@@ -9,6 +9,8 @@ type Props = {
   // Сделай такие пропы и в них передавай логику по сохранению результата в стейт и сбросу выбранного id
   // onResult?: (data: FriendItem[]) => void
   // onError?: (error: Error) => void
+
+  //АА. Тут я маленько не допер!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 };
 
 export const ButtonRequest = ({

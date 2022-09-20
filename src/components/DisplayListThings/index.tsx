@@ -13,9 +13,12 @@ type Props = {
   columnsName: string[];
   idSelectedThing: string | number | null;
   setIdSelectedThings: Dispatch<SetStateAction<any>>; // Этот проп переделай в onSelect?: (thing: FriendItem) => void
+  //ОК
   nameID: string;
   listThings: any[]; // Опиши тип для элементов списка, там же ничего сложного?)
+  //ОК
   children?: string;
+
 };
 
 export const DisplayListThings = ({
@@ -34,6 +37,7 @@ export const DisplayListThings = ({
   const [stateFilter, setStateFilter] = useState<StateFilterType>({});
 
   sort(listThings, stateSort); // Тут sort мутирует listThings который приходит из пропсов, это нехорошо, пропсы должны быть readonly
+  // АА. Это к тому вопросу, почему передаю копию. Вопрос закрыт, или надо переделывать???
   const { resultListThings, noFilteringResult = null } = filter(
     listThings,
     stateFilter
@@ -45,10 +49,13 @@ export const DisplayListThings = ({
     );
   } else {
     // Тут else можно вообще убрать
+    // ОК
     return (
       <>
         <div className={s.blockTable}>
-          <table className={s.tableThings} onFocus={() => console.log(20) /* Что за странный вывод в консоль?)*/}>
+          <table className={s.tableThings} onFocus={() => console.log(20) /* Что за странный вывод в консоль?)*/
+        /*Экспериментальный))) Уберу. Обработчик тут вообще не нужен*/
+        }>
             <thead>
               <tr>
                 {columnsName.map((name, id) => (
