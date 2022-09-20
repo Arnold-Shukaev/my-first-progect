@@ -10,7 +10,11 @@ export const CurrentUserContext = createContext<CUCType>({
   setCurrentUser: null,
 });
 
-export const interactionLocalStorageShared = (
+export const interactionLocalStorageShared = (// Ты сам то вспомнишь что тут происходит вообще?)
+//АА. Вспомню. Эта функция в новой ветке уже доработана чутка. Смысл прост.
+//Эта функция принимает функцию, которая будет применена к localStorage. ...arg - если нужно что-то передать в нее дополнительно
+//Но мне тоже это порно не очень понравилось. Поковыряю еще
+//TODO:формула
   path: string,
   action: (
     oldObjectInLS: { [prop: string]: { [prop: string]: any } },
