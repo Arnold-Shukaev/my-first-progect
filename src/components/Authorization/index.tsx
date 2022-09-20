@@ -1,7 +1,11 @@
-import { GoogleLogin, GoogleLogout } from "react-google-login";
+import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
-import { Dispatch, SetStateAction, useContext, useEffect } from "react";
-import { CurrentUserContext, interactionLocalStorageShared } from "../../shared";
+import { useContext, useEffect } from "react";
+import {
+  CurrentUserContext,
+  openObjInStorage,
+  saveObjInStorage,
+} from "../../shared";
 
 type UserType = {
   thisNewUser: boolean;
@@ -12,54 +16,53 @@ const checkingAndCreateUserFromGoogle = (res: any): UserType => {
   let thisNewUser = false;
   let numUser = 0;
 
-  interactionLocalStorageShared(
-    "messengerUsers",
-    (oldStorage, ...arg) => {
-      const res = arg[0][0]
-      const idInGoogle = String(res.Ca);
+  const storageUsers = openObjInStorage("messengerUsers");
 
-      if (oldStorage.idFromGoogle[idInGoogle]) {
-        numUser = oldStorage.idFromGoogle[idInGoogle]
-        alert('Да. Уже есть в базе. Authorization. номер - ' + oldStorage.idFromGoogle[idInGoogle])
-      } else {
-        numUser = oldStorage.allUsers.countUsers + 1;
-        oldStorage.allUsers.countUsers += 1;
+  const idInGoogle = String(res.Ca);
 
-        const password = [];
-        for (let i = 0; i < 10; i++) {
-          password.push(Math.round(Math.random() * 10));
-        }
-        
-        const fName = res.profileObj.givenName;
-        const sName = res.profileObj.familyName;
-        const name = res.profileObj.name;
-        const email = res.profileObj.email;
-        const imgUrl = res.profileObj.imageUrl;
-        
-        oldStorage.passwords[password.join("")] = numUser;
-        oldStorage.idFromGoogle[idInGoogle] = numUser;
-        oldStorage.email[email] = numUser;
+  if (storageUsers.idFromGoogle[idInGoogle]) {
+    numUser = storageUsers.idFromGoogle[idInGoogle];
+    alert(
+      "Да. Уже есть в базе. Authorization. номер - " +
+        storageUsers.idFromGoogle[idInGoogle]
+    );
+  } else {
+    numUser = storageUsers.allUsers.countUsers + 1;
+    storageUsers.allUsers.countUsers += 1;
 
-        oldStorage.allUsers[numUser] = {
-          fName,
-          sName,
-          name,
-          email,
-          imgUrl,
-          idInGoogle,
-          password: password.join(""),
-        };
-        thisNewUser = true;
-      }
-    },
-    res
-    )
+    const password = [];
+    for (let i = 0; i < 10; i++) {
+      password.push(Math.round(Math.random() * 10));
+    }
+
+    const fName = res.profileObj.givenName;
+    const sName = res.profileObj.familyName;
+    const name = res.profileObj.name;
+    const email = res.profileObj.email;
+    const imgUrl = res.profileObj.imageUrl;
+
+    storageUsers.passwords[password.join("")] = numUser;
+    storageUsers.idFromGoogle[idInGoogle] = numUser;
+    storageUsers.email[email] = numUser;
+
+    storageUsers.allUsers[numUser] = {
+      fName,
+      sName,
+      name,
+      email,
+      imgUrl,
+      idInGoogle,
+      password: password.join(""),
+    };
+    thisNewUser = true;
+  }
+
+  saveObjInStorage("messengerUsers", storageUsers)
   return { thisNewUser, idUser: numUser };
-
 };
 
 export const Authorization = () => {
-  const {setCurrentUser} = useContext(CurrentUserContext)
+  const { setCurrentUser } = useContext(CurrentUserContext);
 
   const clientId =
     "813890704811-d4qgdlm071bh5lm63eqbq3i8oo0upp0q.apps.googleusercontent.com";

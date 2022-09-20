@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import {
   filter,
   sort,
@@ -11,28 +11,27 @@ import s from "./DisplayListThings.module.scss";
 type Props = {
   columnsForDisplay: string[];
   columnsName: string[];
-  idSelectedThing: string | number | null;
-  setIdSelectedThings: Dispatch<SetStateAction<any>>; // Этот проп переделай в onSelect?: (thing: FriendItem) => void
-  //ОК
+  idSelectedThing: string | null;
+  onSelectedThings: (thing: string | null) => void; // Этот проп переделай в onSelect?: (thing: FriendItem) => void
+  //ОК готово
   nameID: string;
-  listThings: any[]; // Опиши тип для элементов списка, там же ничего сложного?)
-  //ОК
+  listThings: Record<string, string>[]; // Опиши тип для элементов списка, там же ничего сложного?)
+  //ОК готово
   children?: string;
-
 };
 
 export const DisplayListThings = ({
   columnsForDisplay,
   columnsName,
   idSelectedThing,
-  setIdSelectedThings,
+  onSelectedThings,
   nameID,
   listThings,
   children,
 }: Props) => {
   const [stateSort, setStateSort] = useState<StateSortType>({
     columnForSorting: null,
-    sortingType: "",
+    sortingType: "none",
   });
   const [stateFilter, setStateFilter] = useState<StateFilterType>({});
 
@@ -47,53 +46,52 @@ export const DisplayListThings = ({
     return (
       <div className={s.defaultText}>{children || "Перечень отсутствует"}</div>
     );
-  } else {
-    // Тут else можно вообще убрать
-    // ОК
-    return (
-      <>
-        <div className={s.blockTable}>
-          <table className={s.tableThings} onFocus={() => console.log(20) /* Что за странный вывод в консоль?)*/
-        /*Экспериментальный))) Уберу. Обработчик тут вообще не нужен*/
-        }>
-            <thead>
-              <tr>
-                {columnsName.map((name, id) => (
-                  <th key={id}>
-                    <SortAndFilterBlock
-                      nameButton={name}
-                      nameParam={columnsForDisplay[id]}
-                      stateSort={stateSort}
-                      setStateSort={setStateSort}
-                      setStateFilter={setStateFilter}
-                    />
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {resultListThings.map((thing: any, id: any) => {
-                return (
-                  <tr
-                    key={id}
-                    className={
-                      thing[nameID] === idSelectedThing
-                        ? s.selectedThing
-                        : undefined
-                    }
-                    onClick={() => setIdSelectedThings(thing[nameID])}
-                  >
-                    {columnsForDisplay.map((column, id2) => (
-                      <td key={id2}>{thing[column]}</td>
-                    ))}
-                  </tr>
-                );
-              })}
-              {noFilteringResult}
-            </tbody>
-          </table>
-        </div>
-      </>
-    );
   }
+  // Тут else можно вообще убрать
+  // ОК готово
+  return (
+    <>
+      <div className={s.blockTable}>
+        <table
+          className={s.tableThings}
+        >
+          <thead>
+            <tr>
+              {columnsName.map((name, id) => (
+                <th key={id}>
+                  <SortAndFilterBlock
+                    nameButton={name}
+                    nameParam={columnsForDisplay[id]}
+                    stateSort={stateSort}
+                    setStateSort={setStateSort}
+                    setStateFilter={setStateFilter}
+                  />
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {resultListThings.map((thing: any, id: any) => {
+              return (
+                <tr
+                  key={id}
+                  className={
+                    thing[nameID] === idSelectedThing
+                      ? s.selectedThing
+                      : undefined
+                  }
+                  onClick={() => onSelectedThings(thing[nameID])}
+                >
+                  {columnsForDisplay.map((column, id2) => (
+                    <td key={id2}>{thing[column]}</td>
+                  ))}
+                </tr>
+              );
+            })}
+            {noFilteringResult}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
 };

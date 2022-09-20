@@ -1,4 +1,4 @@
-import { Dispatch, HTMLAttributeAnchorTarget, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { ButtonSort } from "../ButtonSort";
 import { InputForFilter } from "../InputForFilter";
 import s from "./SortAndFilterBlock.module.scss";
@@ -6,32 +6,35 @@ import s from "./SortAndFilterBlock.module.scss";
 type Props = {
   nameButton: string;
   nameParam: string;
-  stateSort: any;
-  setStateSort: any;
+  stateSort: StateSortType;
+  setStateSort: Dispatch<SetStateAction<StateSortType>>;
   setStateFilter: Dispatch<SetStateAction<StateFilterType>>;
 };
+export type StateSortTypeType = 'none'|'asc'|'desc';
 export type StateSortType = {
-  columnForSorting: HTMLButtonElement | null;
-  sortingType: string;
+  // columnForSorting: HTMLButtonElement | null;
+  columnForSorting: string | null;
+
+  sortingType: StateSortTypeType ;
 };
 export function sort(
   table: any[],
   { columnForSorting, sortingType }: StateSortType
 ) {
   if (table.length === 0 || columnForSorting === null) return table;
-  const columnSorting = columnForSorting.dataset.nameParam!;
+  // const columnSorting = columnForSorting.dataset.nameParam!;
   switch (sortingType) {
     case "none":
       table.sort((a: any, b: any) => a._id - b._id);
       break;
     case "asc":
       table.sort((a: any, b: any) =>
-        a[columnSorting] > b[columnSorting] ? 1 : -1
+        a[columnForSorting] > b[columnForSorting] ? 1 : -1
       );
       break;
     case "desc":
       table.sort((a: any, b: any) =>
-        b[columnSorting] > a[columnSorting] ? 1 : -1
+        b[columnForSorting] > a[columnForSorting] ? 1 : -1
       );
       break;
     default: {
@@ -48,7 +51,7 @@ export function filter(table: any[], filteringRules: StateFilterType) {
   //   countRules++;
   // }
   const countRules = Object.keys(filteringRules).length; // Так проще
-  //TODO: Исправить!!!
+  //TODO: Исправлено
   if (table.length === 0 || countRules === 0)
     return { resultListThings: table };
 
@@ -58,7 +61,7 @@ export function filter(table: any[], filteringRules: StateFilterType) {
     let substring = filteringRules[rule].toLowerCase();
     resultListThings = resultListThings.filter((thing) =>
       thing[nameColumn].toString().toLowerCase().includes(substring)
-      //TODO: ИСПРАВИТЬ
+      //TODO: ИСПРАВЛЕНО
     );
   }
 
@@ -90,7 +93,7 @@ export const SortAndFilterBlock = ({
       <ButtonSort
         nameParam={nameParam}
         stateSort={stateSort}
-        setStateSort={setStateSort}
+        onSortChange={setStateSort}
       />
     </div>
   );

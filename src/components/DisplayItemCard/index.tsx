@@ -4,11 +4,12 @@ import s from "./DisplayItemCard.module.scss";
 type Props = {
   fieldForDisplay: string[];
   nameForField: string[];
-  selectedThing: any; // Тип
-  //ОК
+  selectedThing: Record<string,string> | null; // Тип
+  //ОК исправлен с any
 };
 
 function firstLetter(word: string): string {
+  if (!word) return '.';
   return word[0].toUpperCase(); // Строка может быть пустой же? Будет ошибка
   //АА. С точки зрения всевозможных вероятностей да. НО: selectedThing принимает либо выбранного человека (друга), а у него по определению
   //есть и то и другое, либо принимает null. Тогда, при диструктуризации значениям присваивается ".". Таки, не Должна она быть пустой  
@@ -19,18 +20,18 @@ export const DisplayItemCard = ({
   nameForField,
   selectedThing,
 }: Props) => {
-  const { fName = ".", sName = "." } = { ...selectedThing }; // Зачем тут диструктуризация?
-  //АА. Просто, чтобы не обращаться через selectedThing. Для наглядности
-  const initials = firstLetter(fName) + firstLetter(sName);
-
   if (selectedThing === null) { // Вынеси эту проверку выше, перед тем как пытаешься читать из selectedThing
-    //ОК
+    //ОК. Уже перенес
     return (
       <div className={s.message}>
         Тут будут сведения о вашем потенциальном друге
       </div>
     );
   }
+
+  // const { fName, sName } = { ...selectedThing }; // Зачем тут диструктуризация?
+  //АА. Просто, чтобы не обращаться через selectedThing. Для наглядности
+  const initials = firstLetter(selectedThing.fName) + firstLetter(selectedThing.sName);
   return (
     <>
       <ButtonAddFriend selectedThing={selectedThing} />

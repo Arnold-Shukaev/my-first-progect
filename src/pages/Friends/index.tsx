@@ -7,7 +7,8 @@ import { NotCurrentUser } from "../../components/NotCurrentUser";
 import { SpecialPropertyFriend } from "../../components/SpecialPropertysFriend";
 import {
   CurrentUserContext,
-  interactionLocalStorageShared,
+  openObjInStorage,
+  saveObjInStorage,
 } from "../../shared";
 import s from "./Friends.module.scss";
 
@@ -96,25 +97,17 @@ export const Friends = (): JSX.Element => {
           alert("Сначала выберите 'бывшего' для удаления");
           return state;
         }
-        const newSpecialStorage = interactionLocalStorageShared(
-          "specialStorage" + currentUser,
-          (oldStorage, ...arg) => {
-            delete oldStorage[arg[0][0]];
-          },
-          action.idThing
-        );
-        return { listFriends: newSpecialStorage };
+        const storageUser = openObjInStorage("specialStorage" + currentUser)
+        delete storageUser[action.idThing]
+        saveObjInStorage("specialStorage" + currentUser, storageUser)
+        return { listFriends: storageUser };
+
       case "update":
-        const newSpecialStorageAdd = interactionLocalStorageShared(
-          "specialStorage" + currentUser,
-          (oldStorage, ...arg) => {
-            oldStorage[arg[0][0]][arg[0][1]] = arg[0][2];
-          },
-          action.idThing,
-          action.nameProperty,
-          action.newValue
-        );
-        return { listFriends: newSpecialStorageAdd };
+        if (action.idThing === null) return state;
+        const storageUserAdd = openObjInStorage("specialStorage" + currentUser)
+        storageUserAdd[action.idThing][action.nameProperty] = action.newValue;
+        saveObjInStorage("specialStorage" + currentUser, storageUserAdd)
+        return { listFriends: storageUserAdd };
       default:
         return { listFriends: {} };
     }
@@ -153,7 +146,7 @@ export const Friends = (): JSX.Element => {
             columnsForDisplay={columnsForDisplay}
             columnsName={columnsName}
             idSelectedThing={specialIdSelectedThing}
-            setIdSelectedThings={setSpecialIdSelectedThings}
+            onSelectedThings={setSpecialIdSelectedThings}
             nameID={"_specialID"}
             listThings={arrayFromObject(listFriends)}
           >

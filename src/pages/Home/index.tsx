@@ -1,63 +1,22 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 //Ю?. Неиспользуемые импорты
 //АА. Ага. Не подчистил пока. Проверю все. Просто уже раза 3 делал по разному)))
-import { ButtonRequest } from "../../components/ButtonRequest";
+import {
+  ButtonRequest,
+  requestFriendsList,
+} from "../../components/ButtonRequest";
 import { DisplayItemCard } from "../../components/DisplayItemCard";
 import { DisplayListThings } from "../../components/DisplayListThings";
 import { NotCurrentUser } from "../../components/NotCurrentUser";
 import { CurrentUserContext } from "../../shared";
+import {
+  urlRequest,
+  columnsForDisplay,
+  nameForColumns,
+  fieldForDisplay,
+  nameForField,
+} from "../../shared/constants";
 import style from "./Home.module.scss";
-
-// Настройка запроса
-const urlParams = { // Вынеси вот эти все параметры в отдельный файл в корень, типа constants.ts
-  //TODO: СДЕЛАТЬ!!!!!
-  rows: 20,
-  fName: "{firstName}",
-  sName: "{lastName}",
-  age: "{numberRange|16, 85}",
-  friends: "{numberRange|0, 999}",
-  score: "{numberRange|0, 5}",
-  placeWork: "{business}",
-  email: "{email}",
-  phone: "{phone|format}",
-  fromCity: "{city}",
-};
-
-// const urlRequest = 'http://filltext.com/?' + Object.entries(urlParams).map( param => `${param[0]}=${param[1]}`).join('&') ;
-// Тут проще и правильней будет сделать так, чтобы не возиться c подстановкой значение в строку
-//TODO: Проверить!!!! Вроде учел уже!
-const urlRequest = new URL("http://filltext.com");
-Object.entries(urlParams).forEach(([key, value]) => {
-  urlRequest.searchParams.append(key, String(value));
-});
-
-// Настройки параметров списка людей DisplayListThings
-const columnsForDisplay = ["fName", "sName", "age", "friends", "score"];
-const nameForColumns = ["Имя", "Фамилия", "Возраст", "Друзья", "Оценка"];
-
-// Настройки параметров карточки человека DisplayItemCard
-const fieldForDisplay = [
-  "fName",
-  "sName",
-  "age",
-  "friends",
-  "score",
-  "fromCity",
-  "placeWork",
-  "email",
-  "phone",
-];
-const nameForField = [
-  "Имя",
-  "Фамилия",
-  "Возраст",
-  "Друзья",
-  "Оценка",
-  "Проживает в",
-  "Место работы",
-  "email",
-  "Телефон",
-];
 
 // Когда уходишь со страницы Home - список пропадает. Выглядит не очень. Давай сделаем чтобы
 // 1. Заходишь на Home - список первый раз запрашивается сам, без нажатия на кнопку
@@ -65,14 +24,51 @@ const nameForField = [
 // 3. Список не меняется при переходе на другие страницы и возвращении на Home
 
 //TODO: БУДЕТ СДЕЛАНО
+//Как ты относишься к такой реализации. Тупо через внешнюю переменную с последующим применением в useEffect (см. ниже)
+//Или лучше, state в App? Или можно еще хранить в storage последний выбранный лист друзей.
+// Серьёзный минус тут - видно перерисовку таблицы дважды при первом входе (Кстати, как это можно при такой реализации убрать) Вроде сам уже убрал, но так себе вариантик
+// Второй, но не критический минус - При смене аккаунта без перезагрузки страницы сохраняется тот же список. Хотя это не принципиально
+//(пока не созданы критерии авто-подборки друзей)
+
+let currentNewFriendsList: Record<string, string>[] = [];       //Типо переменная
+
+let thisRepeatRequest = false; // Придумал такую защитку от двойной отрисовки
+
 
 export const Home = (): JSX.Element => {
   const { currentUser } = useContext(CurrentUserContext);
 
-  const [listPeopleStorage, setListPeopleStorage] = useState<any[]>([]);
-  const [idSelectedPerson, setIdSelectedPerson] = useState<number | null>(null);
-  let selectedPerson =
-    idSelectedPerson === null ? null : listPeopleStorage[idSelectedPerson];
+  const [listPeopleStorage, setListPeopleStorage] = useState<
+    Record<string, string>[]
+  >([]); //TODO: УЖЕ Изменен тип с any
+  const [idSelectedPerson, setIdSelectedPerson] = useState<string | null>(null);
+  let selectedPerson: Record<string, string> | null =
+    idSelectedPerson === null ? null : listPeopleStorage[+idSelectedPerson];
+
+  useEffect(() => {                                             //  И реализация взаимодействия с переменной currentNewFriendsList
+    if (currentUser === null) return;
+
+    if (listPeopleStorage.length > 0) {
+      currentNewFriendsList = listPeopleStorage;
+      return;
+    }
+
+    if (currentNewFriendsList.length > 0) {
+      setListPeopleStorage(currentNewFriendsList);
+      return;
+    }
+
+    //                                                              ЗАЩИТА от двойной отрисовки
+    if (thisRepeatRequest) return;
+    thisRepeatRequest = true;
+    setTimeout( () => thisRepeatRequest = false, 1000 )
+
+    requestFriendsList(
+      urlRequest.toString(),
+      setIdSelectedPerson,
+      setListPeopleStorage
+    );
+  });
 
   if (currentUser === null) {
     return <NotCurrentUser />;
@@ -83,18 +79,18 @@ export const Home = (): JSX.Element => {
           <ButtonRequest
             name="Найти новых друзей"
             urlRequest={urlRequest.toString()}
-            handlerResponse={setListPeopleStorage}
-            setIdSelectedThing={setIdSelectedPerson}
+            onResult={setListPeopleStorage}
+            onSelectedThing={setIdSelectedPerson}
           />
           <DisplayListThings
             columnsForDisplay={columnsForDisplay}
             columnsName={nameForColumns}
             idSelectedThing={idSelectedPerson}
-            setIdSelectedThings={setIdSelectedPerson}
+            onSelectedThings={setIdSelectedPerson}
             nameID={"_id"}
             listThings={[...listPeopleStorage]}
             //Почему не просто listPeopleStorage? Зачем в новый массив оборачивать?
-            //АА. Специально отдаю копию, чтобы у DisplayListThings не было возможности исправить оригинал хранилища (защита от очумелых рук. Типо тут мой сервак) 
+            //АА. Специально отдаю копию, чтобы у DisplayListThings не было возможности исправить оригинал хранилища (защита от очумелых рук. Типо тут мой сервак)
           >
             Нажмите "Найти новых друзей" для отображения данных
           </DisplayListThings>
@@ -106,7 +102,7 @@ export const Home = (): JSX.Element => {
             selectedThing={selectedPerson}
           />
         </div>
-     </div>
+      </div>
     );
   }
 };

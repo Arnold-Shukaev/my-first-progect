@@ -7,7 +7,11 @@ import {
   useRef,
   useState,
 } from "react";
-import { CurrentUserContext, interactionLocalStorageShared } from "../../shared";
+import {
+  CurrentUserContext,
+  openObjInStorage,
+  saveObjInStorage,
+} from "../../shared";
 import s from "./Registration.module.scss";
 
 type Props = {
@@ -20,7 +24,7 @@ export const Registration = ({ setRegistrationStarted }: Props) => {
     [HTMLInputElement, string][]
   >([]);
 
-  const {setCurrentUser} = useContext(CurrentUserContext)
+  const { setCurrentUser } = useContext(CurrentUserContext);
 
   const refFName = useRef<HTMLInputElement>(null);
   const refSName = useRef<HTMLInputElement>(null);
@@ -52,10 +56,10 @@ export const Registration = ({ setRegistrationStarted }: Props) => {
       Password!
     );
 
-    if(thisNewUser) {
-      setCurrentUser!(idUser)
+    if (thisNewUser) {
+      setCurrentUser!(idUser);
     } else {
-      alert('Текущий не установлен')
+      alert("Текущий не установлен");
     }
   };
 
@@ -111,30 +115,30 @@ export const Registration = ({ setRegistrationStarted }: Props) => {
     let numUser: number | null = null;
     let thisNewUser = false;
 
-    interactionLocalStorageShared("messengerUsers", (oldStorage) => {
-      if (oldStorage.email[EMail.value]) {
-        alert(
-          "Пользователь с таким email ужу зарегистрирован (this Placeholder)"
-        ); //TODO: Сделать placeholder
-      } else {
-        numUser = oldStorage.allUsers.countUsers + 1;
-        oldStorage.allUsers.countUsers += 1;
+    const storageUsers = openObjInStorage("messengerUsers");
+    if (storageUsers.email[EMail.value]) {
+      alert(
+        "Пользователь с таким email ужу зарегистрирован (this Placeholder)"
+      ); //TODO: Сделать placeholder
+    } else {
+      numUser = storageUsers.allUsers.countUsers + 1;
+      storageUsers.allUsers.countUsers += 1;
 
-        oldStorage.passwords[Password.value] = numUser;
-        oldStorage.email[EMail.value] = numUser;
+      storageUsers.passwords[Password.value] = numUser;
+      storageUsers.email[EMail.value] = numUser;
 
-        oldStorage.allUsers[numUser!] = {
-          fName: FName.value,
-          sName: SName.value,
-          name: FName.value + " " + SName.value,
-          email: EMail.value,
-          imgUrl: null,
-          idInGoogle: "notGoogle",
-          password: Password.value,
-        };
-        thisNewUser = true;
-      }
-    });
+      storageUsers.allUsers[numUser!] = {
+        fName: FName.value,
+        sName: SName.value,
+        name: FName.value + " " + SName.value,
+        email: EMail.value,
+        imgUrl: null,
+        idInGoogle: "notGoogle",
+        password: Password.value,
+      };
+      thisNewUser = true;
+    }
+    saveObjInStorage("messengerUsers", storageUsers);
 
     return { thisNewUser, idUser: numUser };
   }
