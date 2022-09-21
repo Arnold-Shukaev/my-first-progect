@@ -1,5 +1,6 @@
 // Настройка запроса
 export const urlParams = {
+  rows: 20,
   fName: "{firstName}",
   sName: "{lastName}",
   age: "{numberRange|16, 85}",
@@ -11,10 +12,13 @@ export const urlParams = {
   fromCity: "{city}",
 };
 
-export const urlRequest = new URL("http://filltext.com");
-Object.entries(urlParams).forEach(([key, value]) => {
-  urlRequest.searchParams.append(key, String(value));
-});
+export const urlRequest = (): string => {
+  const url = new URL("http://filltext.com");
+  Object.entries(urlParams).forEach(([key, value]) => {
+    url.searchParams.append(key, String(value));
+  });
+  return url.toString();
+};
 
 // Настройки параметров списка людей DisplayListThings
 export const columnsForDisplay = ["fName", "sName", "age", "friends", "score"];

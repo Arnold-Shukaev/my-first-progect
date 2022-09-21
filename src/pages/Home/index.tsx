@@ -48,7 +48,7 @@ export const Home = (): JSX.Element => {
     setTimeout(() => (thisRepeatRequest = false), 1000);
 
     requestFriendsList(
-      urlRequest.toString(),
+      urlRequest(),
       setIdSelectedPerson,
       setListPeopleStorage
     );
@@ -62,7 +62,7 @@ export const Home = (): JSX.Element => {
       <div>
         <ButtonRequest
           name="Найти новых друзей"
-          urlRequest={urlRequest.toString()}
+          urlRequest={urlRequest()}
           onResult={setListPeopleStorage}
           onSelectedThing={setIdSelectedPerson}
         />
