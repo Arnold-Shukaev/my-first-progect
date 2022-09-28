@@ -1,48 +1,66 @@
 import { useContext, useState } from "react";
 import { GoogleLogout } from "react-google-login";
-import { CurrentUserContext } from "../../shared";
+import { CurrentUserContext, openObjInStorage } from "../../shared";
+import { UpdateImageUser } from "../UpdateImageUser";
+import { UserDataAndThemUpdate } from "../UserDataAndThemUpdate";
 import s from "./AuthorizedUser.module.scss";
 
 export const AuthorizedUser = (): JSX.Element => {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [stateInfoBlock, setStateInfoBlock] = useState<boolean>(true);
-  const currentUserParams = JSON.parse(localStorage.messengerUsers).allUsers[
-    currentUser!
-  ];
+  const [startUpdateImage, setStartUpdateImage] = useState<boolean>(false);
+
+  const currentUserParams =
+    openObjInStorage("messengerUsers").allUsers[currentUser!];
+  const userHaveImg = currentUserParams.imgUrl !== null;
+
   const onLogoutSuccess = () => {
     setCurrentUser!(null);
   };
-  const userHaveImg = currentUserParams.imgUrl !== null;
 
   //TODO: добить окно профиля
   //TODO: Юр! Опять - долой тернарник?
   return (
     <div className={s.layout}>
+      <UpdateImageUser
+        stateUpdate={startUpdateImage}
+        onStarted={setStartUpdateImage}
+      />
       <div className={s.grid}>
         <div className={s.first}>
-          <div className={s.imageUser}>
+          <div
+            className={s.imageUser}
+            onClick={() => setStartUpdateImage(true)}
+          >
             {userHaveImg ? (
               <div
                 style={{ backgroundImage: `url(${currentUserParams.imgUrl})` }}
               ></div>
             ) : (
-              <div>А где же фото?! Ё-моё!</div>
+              <div>Без Гугла нет image</div>
             )}
           </div>
           <div className={s.nameUser}>
             {currentUserParams.fName + " " + currentUserParams.sName}
           </div>
         </div>
-        <div className={s.second}>
-          <button onClick={() => setStateInfoBlock(!stateInfoBlock)}>
-            {stateInfoBlock
-              ? `Про меня \u27B3 Про друзей`
-              : "Про друзей \u27B3 Про меня"}
+        <div>
+          <button
+            className={stateInfoBlock ? s.activeButton : undefined}
+            onClick={() => setStateInfoBlock(true)}
+          >
+            Про меня
           </button>
+          <button
+            className={stateInfoBlock ? undefined : s.activeButton}
+            onClick={() => setStateInfoBlock(false)}
+          >
+            Про что-то еще
+          </button>
+        </div>
+        <div>
           {stateInfoBlock ? (
-            <div>
-              Сведения о пользователе. Добавить возможность правки данных
-            </div>
+            <UserDataAndThemUpdate />
           ) : (
             <div>Иные сведения</div>
           )}

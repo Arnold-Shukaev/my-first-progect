@@ -30,14 +30,12 @@ export const Registration = ({ setRegistrationStarted }: Props): JSX.Element => 
   const refSName = useRef<HTMLInputElement>(null);
   const refEMail = useRef<HTMLInputElement>(null);
   const refPassword = useRef<HTMLInputElement>(null);
-  const refImgUrl = useRef<HTMLInputElement>(null); // TODO: Разобраться с заливанием фото
 
   const settings: settingsType = [
     [refFName, "text", "Имя"],
     [refSName, "text", "Фамилия"],
     [refEMail, "text", "email"],
     [refPassword, "password", "Пароль"],
-    [refImgUrl, "text", "Аватар"],
   ];
 
   const handlerClick = () => {

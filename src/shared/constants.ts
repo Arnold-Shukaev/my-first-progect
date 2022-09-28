@@ -47,3 +47,22 @@ export const nameForField = [
   "email",
   "Телефон",
 ];
+
+export const fieldForDisplayUser = [
+  "fName",
+  "sName",
+  "age",
+  "fromCity",
+  "placeWork",
+  "email",
+  "phone",
+];
+export const nameForFieldUser = [
+  "Имя",
+  "Фамилия",
+  "Возраст",
+  "Место жительства",
+  "Место работы",
+  "email",
+  "Телефон",
+];

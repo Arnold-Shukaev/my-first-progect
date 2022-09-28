@@ -1,0 +1,20 @@
+.propertiesBlock {
+  margin: 1rem 0;
+  display: grid;
+  grid-template-columns: 120px auto;
+  justify-content: center;
+
+  > span {
+    text-align: left;
+    font-weight: bolder;
+  }
+  > input {
+    text-align: right;
+    border: none;
+  }
+}
+
+.editInput {
+  border: none;
+  background-color: white;
+}

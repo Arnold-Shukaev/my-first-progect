@@ -8,19 +8,31 @@
   background-color: $color-fon;
   border-radius: 1rem;
   overflow-y: none;
+  position: relative;
 }
 
 .grid {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 4fr 60px;
+  grid-template-rows: auto auto 4fr 45px;
   overflow: hidden;
   row-gap: 1rem;
-  align-items: center;
+  align-items: flex-start;
 
-  div {
+  > div {
     text-align: center;
   }
+  > div:nth-child(2) {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    > button {
+      width: 100%;
+    }
+  }
+  // > div:nth-child(3) {
+  //   text-align: left;
+  // }
 }
 
 .first {
@@ -31,6 +43,7 @@
 }
 
 .imageUser {
+  cursor: pointer;
   > div {
     width: 10rem;
     height: 10rem;
@@ -45,4 +58,8 @@
 
 .nameUser {
   font-weight: bolder;
+}
+
+.activeButton {
+  background-color: $color-button-active;
 }
