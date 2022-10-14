@@ -14,6 +14,9 @@ export const ButtonSort = ({
 }: Props): JSX.Element => {
   const { columnForSorting, sortingType } = stateSort;
 
+  console.log('render ButtonSort')
+
+
   function handleClickButton() {
     if (columnForSorting !== nameParam) {
       onSortChange({ columnForSorting: nameParam, sortingType: "asc" });

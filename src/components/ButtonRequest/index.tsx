@@ -1,3 +1,4 @@
+import { memo } from "react";
 import style from "./ButtonRequest.module.scss";
 
 type Props = {
@@ -23,18 +24,17 @@ export function requestFriendsList(
     });
 }
 
-export const ButtonRequest = ({
-  name,
-  urlRequest,
-  onResult,
-  onSelectedThing,
-}: Props): JSX.Element => {
-  return (
-    <button
-      onClick={() => requestFriendsList(urlRequest, onSelectedThing, onResult)}
-      className={style.but}
-    >
-      {name}
-    </button>
-  );
-};
+export const ButtonRequest = memo(
+  ({ name, urlRequest, onResult, onSelectedThing }: Props): JSX.Element => {
+    return (
+      <button
+        onClick={() =>
+          requestFriendsList(urlRequest, onSelectedThing, onResult)
+        }
+        className={style.but}
+      >
+        {name}
+      </button>
+    );
+  }
+);

@@ -27,6 +27,9 @@ export const Home = (): JSX.Element => {
     Record<string, string>[]
   >([]);
   const [idSelectedPerson, setIdSelectedPerson] = useState<string | null>(null);
+
+console.log("render Home")
+
   let selectedPerson: Record<string, string> | null =
     idSelectedPerson === null ? null : listPeopleStorage[+idSelectedPerson];
 
@@ -60,7 +63,7 @@ export const Home = (): JSX.Element => {
   return (
     <div className={style.layout}>
       <div>
-        <ButtonRequest
+        <ButtonRequest 
           name="Найти новых друзей"
           urlRequest={urlRequest()}
           onResult={setListPeopleStorage}

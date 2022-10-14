@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, memo, SetStateAction } from "react";
 import { ButtonSort } from "../ButtonSort";
 import { InputForFilter } from "../InputForFilter";
 import s from "./SortAndFilterBlock.module.scss";
@@ -67,13 +67,17 @@ export function filter(table: any[], filteringRules: StateFilterType) {
   return { resultListThings, noFilteringResult };
 }
 
-export const SortAndFilterBlock = ({
+export const SortAndFilterBlock = memo(
+  ({
   nameButton,
   nameParam,
   stateSort,
   setStateSort,
   setStateFilter,
 }: Props): JSX.Element => {
+
+console.log('render SortAndFilterBlock')
+
   return (
     <div className={s.sortBlock}>
       <InputForFilter
@@ -88,4 +92,5 @@ export const SortAndFilterBlock = ({
       />
     </div>
   );
-};
+}
+); 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import {
   filter,
   sort,
@@ -27,6 +27,9 @@ export const DisplayListThings = ({
   listThings,
   children,
 }: Props): JSX.Element => {
+  
+console.log("render DisplayListThings");
+
   const [stateSort, setStateSort] = useState<StateSortType>({
     columnForSorting: null,
     sortingType: "none",

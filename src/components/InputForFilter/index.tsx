@@ -24,6 +24,9 @@ export const InputForFilter = ({
     });
   }
 
+console.log('render InputForFilter')
+
+
   return (
     <div className={s.sortBlockInput}>
       <input
@@ -38,4 +41,4 @@ export const InputForFilter = ({
       <label htmlFor={nameParam + "Input"}>{nameButton}</label>
     </div>
   );
-};
+}; 
