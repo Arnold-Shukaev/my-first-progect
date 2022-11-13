@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { GoogleLogout } from "react-google-login";
+import { GoogleLogout } from "@leecheuk/react-google-login";
 import { CurrentUserContext, openObjInStorage } from "../../shared";
 import { UpdateImageUser } from "../UpdateImageUser";
 import { UserDataAndThemUpdate } from "../UserDataAndThemUpdate";

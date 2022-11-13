@@ -46,6 +46,6 @@
   },
   "devDependencies": {
     "prettier": "^2.7.1",
-    "react-google-login": "^5.2.2"
+    "@leecheuk/react-google-login": "^5.4.1"
   }
 }
