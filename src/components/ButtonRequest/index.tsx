@@ -3,13 +3,13 @@ import style from "./ButtonRequest.module.scss";
 
 type Props = {
   name: string;
-  urlRequest: string;
+  urlRequest: Request;
   onResult: (data: Record<string, string>[]) => void;
   onSelectedThing: (state: null) => void;
 };
 
 export function requestFriendsList(
-  urlRequest: string,
+  urlRequest: Request,
   onSelectedThing: (state: null) => void,
   onResult: (data: Record<string, string>[]) => void
 ) {

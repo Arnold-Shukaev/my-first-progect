@@ -1,4 +1,4 @@
-import { GoogleLogin } from "react-google-login";
+import { GoogleLogin } from "@leecheuk/react-google-login";
 import { gapi } from "gapi-script";
 import { useContext, useEffect } from "react";
 import {

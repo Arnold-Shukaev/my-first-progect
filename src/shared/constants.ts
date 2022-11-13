@@ -1,24 +1,13 @@
-// Настройка запроса
-export const urlParams = {
-  rows: 20,
-  fName: "{firstName}",
-  sName: "{lastName}",
-  age: "{numberRange|16, 85}",
-  friends: "{numberRange|0, 999}",
-  score: "{numberRange|0, 5}",
-  placeWork: "{business}",
-  email: "{email}",
-  phone: "{phone|format}",
-  fromCity: "{city}",
-};
+export const urlRequest = new Request(
+  "https://api.json-generator.com/templates/0-Z1hAZLqPBb/data",
+  {
+    headers: {
+      Authorization: "Bearer jnc9vbdlqzhr3tesva1h3cxqg0hmcwn61wai3hyq",
+    },
+  }
+);
 
-export const urlRequest = (): string => {
-  const url = new URL("http://filltext.com");
-  Object.entries(urlParams).forEach(([key, value]) => {
-    url.searchParams.append(key, String(value));
-  });
-  return url.toString();
-};
+// export const urlRequest = (): Request => dataRequest;
 
 // Настройки параметров списка людей DisplayListThings
 export const columnsForDisplay = ["fName", "sName", "age", "friends", "score"];
