@@ -51,7 +51,7 @@ console.log("render Home")
     setTimeout(() => (thisRepeatRequest = false), 1000);
 
     requestFriendsList(
-      urlRequest(),
+      urlRequest,
       setIdSelectedPerson,
       setListPeopleStorage
     );
@@ -65,7 +65,7 @@ console.log("render Home")
       <div>
         <ButtonRequest 
           name="Найти новых друзей"
-          urlRequest={urlRequest()}
+          urlRequest={urlRequest}
           onResult={setListPeopleStorage}
           onSelectedThing={setIdSelectedPerson}
         />
